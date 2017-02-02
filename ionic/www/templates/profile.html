@@ -1,23 +1,69 @@
 <ion-view view-title="My-profile">
-	<ion-content>
+  <ion-content>
 		
-		<div class="well ">
-			<p class="center-block" style="width:300px;"> Sex : Male</p>
-			<p class="center-block" style="width:300px;"> Birth : 1995 </p>
-		</div>
-		
-		<div class="list">
-			<label class="item item-input item-stacked-label">
-				<span class="input-label">Email</span>
-				<input type="text" placeholder="myeol2@snu.ac.kr">
-			</label>
-			<label class="item item-input item-stacked-label">
-				<span class="input-label">Instagram ID</span>
-				<input type="text" placeholder="myeol2">
-			</label>
-		</div>
+    <form ng-submit="doLogin()" ng-hide="login_login">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="loginData.username">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginData.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Log in</button>
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="button" ng-click="loginNew()">회원가입</button>
+        </label>
+      </div>
+    </form>
 
+    <form ng-submit="loginNew_submit()" ng-show="login_new">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="loginNew.username" placeholder="required" ng-required="true" ng-keyup="loginNewCheck_id()">
+        </label>
+        <div ng-show="login_new_id" class="col-xs-12 col-md-12 alert alert-warning" role="alert">중복 아이디 존재</div>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginNew.password" placeholder="required" ng-required="true">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Confirm PW</span>
+          <input type="password" ng-model="loginNew.password_c" placeholder="required" ng-required="true" ng-keyup="loginNewCheck_pw()">
+        </label>
+        <div ng-show="login_new_pw" class="col-xs-12 col-md-12 alert alert-warning" role="alert">비밀번호가 일치하지 않습니다.</div>
+        <div class="item">
+          <span style="float:left width: 40%"">Gender</span>
+          <div style="float:right; width: 30%"><input type="radio" name="gender" ng-model="loginNew.gender" value="F">여자</div>
+          <div style="float:right; width: 30%"><input type="radio" name="gender" ng-model="loginNew.gender" value="M">남자</div>
+	</div>
+        <label class="item item-input">
+          <span class="input-label">Instagram ID</span>
+          <input type="text" ng-model="loginNew.instaID" placeholder="optional" >
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit" ng-disabled="(!loginNew.username||!loginNew.password||!loginNew.password||!loginNew.gender||login_new_id||login_new_pw)">회원가입</button>
+        </label>
+      </div>
+    </form>	
+    <div class="list" ng-show="login_profile">
+      <label class="item item-input item-stacked-label">
+	<span class="input-label">Username</span>
+	<input type="text" placeholder="hihi">
+      </label>
+      <label class="item item-input item-stacked-label">
+	<span class="input-label">Gender</span>
+	<input type="text" placeholder="Male">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Instagram ID</span>
+        <input type="text" placeholder="myeol2">
+      </label>
+    </div>
 
-
-	</ion-content>
+  </ion-content>
 </ion-view>

@@ -3,7 +3,10 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var fs = require('fs');
 var app = express();
+var _ = require('lodash')
+var cors = require('cors')
 var Photo = require('./models/photo')
+var User = require('./models/user')
 
 var _storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -15,11 +18,13 @@ var _storage = multer.diskStorage({
 })
 var upload = multer({ storage: _storage })
 
+app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 app.set('views', './views_file');
 app.set('view engine','pug');
 
+/* Snaplook Photo API */
 app.all('/api/photo/clean', function(req, res, next){
     Photo.remove(function(err){if(err){return next(err)}})
     Photo.find(function(err, docs){
@@ -39,7 +44,6 @@ app.get('/api/photo/init', function(req, res){
     }
     res.send("end")
 })
-
 app.get(['/api/photo','/api/photo/:path'], function(req, res, next){
     var path = req.params.path
     if (path){
@@ -56,7 +60,6 @@ app.get(['/api/photo','/api/photo/:path'], function(req, res, next){
 	})
     }
 })
-
 app.post('/api/photo', function (req, res, next) {
     console.log("post received")
     var photo = new Photo({
@@ -66,11 +69,16 @@ app.post('/api/photo', function (req, res, next) {
     console.log(photo)
     photo.save(function (err, post) {
 	if (err) { return next(err) }
-	else {}
 	res.json(201, post)
     })
 })
 
+/* Snaplook Login API */
+app.use('/api/session', require('./controllers/api/session'))
+app.use('/api/user', require('./controllers/api/user'))
+
+
+/* etc */
 app.get('/upload', function(req, res){
     res.render('upload');
 });

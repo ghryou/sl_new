@@ -26,7 +26,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 		return {
 			scope: true,
 
-
 			controller: function ($scope, $element, $ionicGesture, $interval) {
 				$scope.left = 0;
 				$scope.top = 0;
