@@ -36,7 +36,7 @@ app.all('/admin/photo/clean', function(req, res, next){
 app.get('/admin/photo/init', function(req, res){
     for(i=1;i<=10;i++){
 	var photo = new Photo({
-            image_path : photoPath +i+'.jpg',
+            image_path : i+'.jpg',
 			score: i,
 			explanation:'Cheer Up!'+i 
 	})

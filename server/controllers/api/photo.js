@@ -30,8 +30,14 @@ router.get(['/','/:path'], function(req, res, next){
     }else{
 	    Photo.find(function(err, docs) {
 	        if(err){return next(err)}
-	        var index = Math.floor((Math.random() * docs.length) + 1)
-	        res.json(docs[index])
+	        
+	        var res_docs = []
+	        for(var i=0; i<5; i++){
+	            var index = Math.floor((Math.random() * docs.length) + 1)
+	            console.log(index)
+	            res_docs.push(docs[index-1])
+	        }    
+	        res.json(res_docs)
 	        //res.sendFile('./public/'+docs[index].image_path, {"root": __dirname})
 	        console.log(index)
 	    })

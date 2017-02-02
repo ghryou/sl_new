@@ -242,33 +242,28 @@ angular.module('starter.controllers', [])
 			componentHandler.upgradeDom(); // CSS 적용
 
 
-			$http.get('js/photos.json').success(function (response){
+			$http.get(root+'/api/photo').then(function (res){
 			
-
-				$scope.photos= response.a;
+			    $scope.photos= res.data;
+			    console.log(res.data)
 
 				var html_slide = ""
 
 				$.each($scope.photos, function (index, value) {
 
-					value.comment = "나의 데일리룩"; 
-
-					html_slide += '<li class="pane3 id="' + value.id + '"><div class="img" pid="' + value.id + '" style="background: url(\''+ value.image +'\') no-repeat scroll center center;background-size: cover;"></div>';
+					html_slide += '<li class="pane3 id="' + value.username + '"><div class="img" pid="' + value.username + '" style="background: url(\''+ 'http://localhost:3000/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
 				
 					html_slide += "<div style='height:22px;'></div>";
 				
-					html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.id + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.comment ? value.comment : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
+					html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.explanation ? value.explanation : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
 				});
 
 				$("#lis").html(html_slide);
 				componentHandler.upgradeDom(); // CSS 적용
 				
 				goTinder();
+			})
 
-			});
-
-
-			
 		}
 
 
