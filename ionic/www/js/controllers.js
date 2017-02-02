@@ -184,7 +184,9 @@ angular.module('starter.controllers', [])
 	})
 
 
-	.controller('HomeCtrl', function($scope, $stateParams, $ionicModal, $http) {
+	.controller('HomeCtrl', function($scope, $ionicModal, $http) {
+
+		$scope.sex = { value : 2 }
 
 		$ionicModal.fromTemplateUrl('templates/options.html',{	
 			scope : $scope			
@@ -192,27 +194,88 @@ angular.module('starter.controllers', [])
 			$scope.modal = modal;
 
 		});
-
+	
 		$scope.showOptions = function() {
-
 			$scope.modal.show();
 		};
 
 
-
-		$http.get('js/photos.json').success(function(response){
+		$http.get('js/photos.json').success(function (response){
+			
 			$scope.photos= response.a;
-			console.log(($scope.photos.length))
+
+			var html_slide = ""
+
+			$.each($scope.photos, function (index, value) {
+
+				value.comment = "나의 데일리룩"; 
+
+				html_slide += '<li class="pane' + (index + 1) + '" id="' + value.id + '"><div class="img" pid="' + value.id + '" style="background: url(\''+ value.image +'\') no-repeat scroll center center;background-size: cover;"></div>';
+			
+				html_slide += "<div style='height:22px;'></div>";
+			
+				html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.id + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.comment ? value.comment : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
+			});
+
+			$("#lis").html(html_slide);
+			componentHandler.upgradeDom(); // CSS 적용
+
+			goTinder();
+
 		});
+
+		function goTinder() {
+
+			$("#tinderslide").jTinder({
+					onDislike: function (item) {
+					},
+					onLike: function (item) {
+					},
+					animationRevertSpeed: 200,
+					animationSpeed: 400,
+					threshold: 1,
+					likeSelector: '.like',
+					dislikeSelector: '.dislike'
+			});
+			
+		}
 
 
 		$scope.hideOptions = function(){
 			$scope.modal.hide();
-		};
+				};
 
 		$scope.$on('$destroy', function(){ // when current view destroys , delete modal too
 			$scope.modal.remove();
 		})
 
 
+	})
+	.controller('BestLookCtrl', function($scope, $http){
+	
+		$http.get(root+'/api/bestlook').success(function(images){
+		$scope.images= images;
+	
+		});
+
+	
+		/*	var ithBestLook = function(i){
+			$http.get($scope.images[i].image_path)
+				.success(function(image) {
+					console.log('Test');
+					console.log('i is ', i);
+					console.log($scope.images[i].image_path);
+					$scope.bestLooks.push(image);
+				}).error(function(data){console.log("The request isn't working");}); }
+
+	
+		var getBestLook = function(){	
+			for(var i=0; i<$scope.images.length; i++){
+				ithBestLook(i);
+			}
+		}
+		
+		getBestLook();
+
+		*/
 	});

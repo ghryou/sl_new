@@ -1,10 +1,13 @@
 <ion-modal-view>
 	<ion-content>
 		<ion-list>
-			<ion-radio ng-model="sex" ng-value="male"> Male </ion-radio>
-			<ion-radio ng-model="sex" ng-value="female"> Female </ion-radio>
-			<ion-radio ng-model="sex" ng-value="all"> All </ion-radio>
+			<ion-radio ng-model="sex.value" ng-value="0" ng-click=hideOptions()> Male </ion-radio>
+			<ion-radio ng-model="sex.value" ng-value="1" ng-click=hideOptions()> Female </ion-radio>
+			<ion-radio ng-model="sex.value" ng-value="2" ng-click=hideOptions()> All </ion-radio>
 		</ion-list>
+		<!--<div class="center">
+		<button class="button button-dark" ng-click=hideOptions()> Ok </button>
+		</div>!-->
 	</ion-content>
 </ion-modal-view>
 
