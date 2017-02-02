@@ -4,7 +4,18 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache'])
+
+	.config(function(ionicImgCacheProvider) {
+		// Enable imgCache debugging. 
+		ionicImgCacheProvider.debug(true);
+ 
+		// Set storage size quota to 100 MB. 
+		ionicImgCacheProvider.quota(100);
+
+		// Set foleder for cached files. 
+		ionicImgCacheProvider.folder('snaplook-img-cache');    
+	})
 
 	.run(function($ionicPlatform) {
 		$ionicPlatform.ready(function() {
@@ -46,7 +57,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 				url: '/profile',
 				views: {
 					'menuContent': {
-						templateUrl: 'templates/profile.html'
+						templateUrl: 'templates/profile.html',
+						controller: 'ProfileCtrl'
 					}
 				}
 			})
