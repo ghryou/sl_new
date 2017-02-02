@@ -4,6 +4,9 @@ var multer = require('multer');
 var fs = require('fs');
 var app = express();
 var Photo = require('./models/photo')
+var cors = require('cors')
+
+var photoPath = 'res/photos/'
 
 var _storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -14,6 +17,10 @@ var _storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: _storage })
+
+app.use(express.static('public'));
+app.use(cors());
+
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
@@ -30,9 +37,11 @@ app.all('/api/photo/clean', function(req, res, next){
 app.get('/api/photo/init', function(req, res){
     for(i=1;i<=10;i++){
 	var photo = new Photo({
-            image_path:i+'.jpg'
+            image_path : photoPath +i+'.jpg',
+			score: i,
+			explanation:'Cheer Up!'+i 
 	})
-	console.log(photo)
+
 	photo.save(function (err, post) {
             if (err) { return next(err) }
 	})
@@ -42,19 +51,30 @@ app.get('/api/photo/init', function(req, res){
 
 app.get(['/api/photo','/api/photo/:path'], function(req, res, next){
     var path = req.params.path
-    if (path){
-	Photo.find({image_path:path},function(err,docs){
-	    res.sendFile('./public/res/photos/'+path, {"root":__dirname})
+	var realPath = photoPath + path
+    
+	if (path){
+	Photo.find({image_path: realPath},function(err,docs){
+	    res.sendFile('./public/'+path, {"root":__dirname})
 	})
     }else{
 	Photo.find(function(err, docs) {
 	    if(err){return next(err)}
-	    //res.json(docss)
+	    //res.json(docs)
 	    var index = Math.floor((Math.random() * docs.length) + 1)
-	    res.sendFile('./public/res/photos/'+docs[index].image_path, {"root": __dirname})
+	    res.sendFile('./public/'+docs[index].image_path, {"root": __dirname})
 	    console.log(index)
 	})
     }
+})
+
+app.get(['/api/bestlook'], function(req,res){
+
+	var minimum = (new Date((new Date()).getTime()-(60*60*1000)));
+
+	Photo.find({date: { $gte: minimum }}, function(err,docs){
+		res.json(docs)	
+	}).sort({score : -1}).limit(5)		
 })
 
 app.post('/api/photo', function (req, res, next) {

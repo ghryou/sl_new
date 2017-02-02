@@ -1,4 +1,12 @@
 {
   "name": "SnabLook",
-  "app_id": ""
+  "app_id": "",
+  "proxies":[
+	  {
+	  	"path":"/api/bestlook",
+	  	"proxyUrl": "http://localhost:3000/api/bestlook"
+	  
+	  }
+  
+  ]
 }

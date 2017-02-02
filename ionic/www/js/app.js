@@ -54,7 +54,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 				url: '/bestlook',
 				views: {
 					'menuContent': {
-						templateUrl: 'templates/bestlook.html'
+						templateUrl: 'templates/bestlook.html',
+						controller: 'BestLookCtrl'
 					}
 				}
 			})

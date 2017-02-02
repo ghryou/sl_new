@@ -1,3 +1,5 @@
+var root = 'http://localhost:3000'
+
 angular.module('starter.controllers', [])
 
 	.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -41,7 +43,9 @@ angular.module('starter.controllers', [])
 		};
 	})
 
-	.controller('HomeCtrl', function($scope, $stateParams, $ionicModal, $http) {
+	.controller('HomeCtrl', function($scope, $ionicModal, $http) {
+
+		$scope.sex = { value : 2 }
 
 		$ionicModal.fromTemplateUrl('templates/options.html',{	
 			scope : $scope			
@@ -49,9 +53,8 @@ angular.module('starter.controllers', [])
 			$scope.modal = modal;
 
 		});
-
+	
 		$scope.showOptions = function() {
-
 			$scope.modal.show();
 		};
 
@@ -78,7 +81,6 @@ angular.module('starter.controllers', [])
 
 			goTinder();
 
-
 		});
 
 		function goTinder() {
@@ -100,11 +102,39 @@ angular.module('starter.controllers', [])
 
 		$scope.hideOptions = function(){
 			$scope.modal.hide();
-		};
+				};
 
 		$scope.$on('$destroy', function(){ // when current view destroys , delete modal too
 			$scope.modal.remove();
 		})
 
 
+	})
+	.controller('BestLookCtrl', function($scope, $http){
+	
+		$http.get(root+'/api/bestlook').success(function(images){
+		$scope.images= images;
+	
+		});
+
+	
+		/*	var ithBestLook = function(i){
+			$http.get($scope.images[i].image_path)
+				.success(function(image) {
+					console.log('Test');
+					console.log('i is ', i);
+					console.log($scope.images[i].image_path);
+					$scope.bestLooks.push(image);
+				}).error(function(data){console.log("The request isn't working");}); }
+
+	
+		var getBestLook = function(){	
+			for(var i=0; i<$scope.images.length; i++){
+				ithBestLook(i);
+			}
+		}
+		
+		getBestLook();
+
+		*/
 	});
