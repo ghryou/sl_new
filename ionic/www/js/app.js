@@ -16,6 +16,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache'])
 		// Set foleder for cached files. 
 		ionicImgCacheProvider.folder('snaplook-img-cache');    
 	})
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
 	.run(function($ionicPlatform) {
 		$ionicPlatform.ready(function() {
