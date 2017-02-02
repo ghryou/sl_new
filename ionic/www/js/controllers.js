@@ -278,4 +278,18 @@ angular.module('starter.controllers', [])
 		getBestLook();
 
 		*/
-	});
+	})
+
+	.controller("CordovaController", function($scope, $cordovaFile){
+	
+	
+	$scope.upload = function(){
+		var options(root+"/admin/photo", "/android_asset/www/img/ionic.png", options).then(function(result){
+			console.log("SUCCESS: " + JSON.stringify(result.response));
+	
+		},function(error){
+		console.log(error);
+		});
+	
+	}	
+});
