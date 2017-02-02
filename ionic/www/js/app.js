@@ -107,11 +107,21 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 					}
 				}
 			})
+
 			.state('app.snapbox', {
 				url: '/snapbox',
 				views: {
 					'menuContent': {
 						templateUrl: 'templates/snapbox.html'
+					}
+				}
+			})
+
+			.state('app.inquiry', {
+				url: '/inquiry',
+				views: {
+					'menuContent': {
+						templateUrl: 'templates/inquiry.html'
 					}
 				}
 			});

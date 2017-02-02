@@ -1,26 +1,25 @@
 <ion-view view-title="My-profile">
   <ion-content>
-		
-    <form ng-submit="doLogin()" ng-hide="login_login">
+
+    <form ng-submit="doLogin()" ng-hide="UserAuth.isSessionActive()||login_login">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
+          <input type="text" ng-model="loginData.username" placeholder="username">
         </label>
         <label class="item item-input">
           <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
+          <input type="password" ng-model="loginData.password" placeholder="password">
         </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Log in</button>
         </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="button" ng-click="loginNew()">회원가입</button>
-        </label>
+	<span class="col-xs-12 col-md-12 label label-info button button-block" ng-click="loginNew()">앗?! 아직 회원이 아니라구요??</span>
+	<div ng-show="login_wrong" class="col-xs-12 col-md-12 alert alert-warning" style = "text-align: center" role="alert">아이디, 비밀번호를 확인해주세요</div>
       </div>
     </form>
 
-    <form ng-submit="loginNew_submit()" ng-show="login_new">
+    <form ng-submit="loginNew_submit()" ng-show="!UserAuth.isSessionActive()&&login_new">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
@@ -37,7 +36,7 @@
         </label>
         <div ng-show="login_new_pw" class="col-xs-12 col-md-12 alert alert-warning" role="alert">비밀번호가 일치하지 않습니다.</div>
         <div class="item">
-          <span style="float:left width: 40%"">Gender</span>
+          <span style="float:left width: 40%">Gender</span>
           <div style="float:right; width: 30%"><input type="radio" name="gender" ng-model="loginNew.gender" value="F">여자</div>
           <div style="float:right; width: 30%"><input type="radio" name="gender" ng-model="loginNew.gender" value="M">남자</div>
 	</div>
@@ -48,21 +47,24 @@
         <label class="item">
           <button class="button button-block button-positive" type="submit" ng-disabled="(!loginNew.username||!loginNew.password||!loginNew.password||!loginNew.gender||login_new_id||login_new_pw)">회원가입</button>
         </label>
+        <span class="col-xs-12 col-md-12 label label-info button button-block" ng-click="loginNew_back()">뒤로 가기</span>
       </div>
-    </form>	
-    <div class="list" ng-show="login_profile">
-      <label class="item item-input item-stacked-label">
+    </form>
+
+    <div class="list" ng-show="UserAuth.isSessionActive()||login_profile">
+      <label class="item item-input">
 	<span class="input-label">Username</span>
-	<input type="text" placeholder="hihi">
+	<div><strong> {{profile_username}} </strong></div>
       </label>
-      <label class="item item-input item-stacked-label">
+      <label class="item item-input">
 	<span class="input-label">Gender</span>
-	<input type="text" placeholder="Male">
+	<div><strong> {{profile_gender}} </strong></div>
       </label>
-      <label class="item item-input item-stacked-label">
+      <label class="item item-input">
         <span class="input-label">Instagram ID</span>
-        <input type="text" placeholder="myeol2">
+	<div><strong> {{profile_insta}} </strong></div>
       </label>
+      <span class="col-xs-12 col-md-12 label label-info button button-block" ng-click="profile_logout()">Log out</span>
     </div>
 
   </ion-content>

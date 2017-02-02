@@ -19,7 +19,7 @@ router.post('/new', function (req, res, next){
 router.get('/check/:user', function (req, res, next){
     var user = req.params.user
     User.findOne({username:user},function(err,docs){
-	if(docs){res.json(true)}
+	if(docs){res.json(docs)}
 	else{res.json(false)}
     })
 })
@@ -28,18 +28,22 @@ router.get('/', function (req, res, next){
         return res.send(401)
     }
     var auth = jwt.decode(req.headers['x-auth'], config.secret)
+    console.log("res "+auth)
     User.findOne({username: auth.username}, function(err, user){
         if(err){return next(err)}
 	res.json(user)
     })
 })
 router.post('/', function (req, res, next) {
-    var user = new User({username: req.body.username})
+    var user = new User({
+		username: req.body.username,
+		gender: req.body.gender,
+		insta: req.body.insta
+		})
     bcrypt.hash(req.body.password, 10, function(err, hash) {
 	user.password = hash
 	user.save(function (err, user) {
 	    if(err) {throw next(err)}
-	    console.log(hash)
 	    res.send(201)
 	})
     })
