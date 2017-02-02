@@ -12,15 +12,15 @@ router.get('/new', function (req, res){
 router.post('/new', function (req, res, next){
     var user = new User({username:req.body.username, password:req.body.password})
     user.save(function (err, docs){
-	if(err) { return next(err) }
-	res.json(201, docs)
+	    if(err) { return next(err) }
+	    res.json(201, docs)
     })
 })
 router.get('/check/:user', function (req, res, next){
     var user = req.params.user
     User.findOne({username:user},function(err,docs){
-	if(docs){res.json(docs)}
-	else{res.json(false)}
+	    if(docs){res.json(docs)}
+	    else{res.json(false)}
     })
 })
 router.get('/', function (req, res, next){
@@ -31,7 +31,7 @@ router.get('/', function (req, res, next){
     console.log("res "+auth)
     User.findOne({username: auth.username}, function(err, user){
         if(err){return next(err)}
-	res.json(user)
+	    res.json(user)
     })
 })
 router.post('/', function (req, res, next) {
@@ -41,11 +41,11 @@ router.post('/', function (req, res, next) {
 		insta: req.body.insta
 		})
     bcrypt.hash(req.body.password, 10, function(err, hash) {
-	user.password = hash
-	user.save(function (err, user) {
-	    if(err) {throw next(err)}
-	    res.send(201)
-	})
+	    user.password = hash
+	    user.save(function (err, user) {
+	        if(err) {throw next(err)}
+	        res.send(201)
+	    })
     })
 })
 
