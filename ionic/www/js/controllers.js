@@ -87,8 +87,11 @@ angular.module('starter.controllers', [])
 		$scope.login = function() {
 			$scope.modal.show();
 		};
+
+	})
+
+	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth) {
 		
-		// Profile //////////////////////////////////////////////////////////
 		$scope.loginNew = function(){
 			$scope.login_login = true
 			$scope.login_new = true
@@ -183,7 +186,6 @@ angular.module('starter.controllers', [])
 		}
 	})
 
-
 	.controller('HomeCtrl', function($scope, $ionicModal, $http) {
 
 
@@ -252,6 +254,7 @@ angular.module('starter.controllers', [])
 
 
 	})
+
 	.controller('BestLookCtrl', function($scope, $http){
 	
 		$http.get(root+'/api/bestlook').success(function(images){
