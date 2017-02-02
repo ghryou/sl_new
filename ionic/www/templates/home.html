@@ -12,11 +12,50 @@
 		</button>
 	</ion-nav-buttons>
 
-	
-	<ion-content>
-		<card ng-repeat="photo in photos">
-					<img ng-src={{photo.image}} />
-		</card>
-	</ion-content>
+	<!--ion-content-->
+	<body style="width: 100%; height: 100%;background-color:#eaeaea;">
+
+		<style>
+		.outer {
+			display: table;
+			width: 100%;
+			height: 100%;
+			}
+		.inner {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: center;
+			}
+		.container {
+			/*  width: 70%;
+					height: 70%; */
+			margin: 10px auto;
+			max-width:300px;
+			}
+		</style>
+		<div class="container">
+			<div class="outer">
+				<div class="inner">
+					<div class="centered" id="tinderdiv">
+						<div id="tinderslide" style="margin-top:-30px !important;margin-left:-50px !important;width:380px;height:590px;">
+							<ul id="lis">
+								<li class="pane1"><div class="img"></div><div><p>사진 로딩중</p></div><div class="like"></div><div class="dislike"></div></li>
+								<li class="pane2"><div class="img"></div><div><p>사진 로딩중</p></div><div class="like"></div><div class="dislike"></div></li>
+								<li class="pane3"><div class="img"></div><div><p>사진 로딩중</p></div><div class="like"></div><div class="dislike"></div></li>
+								<li class="pane4"><div class="img"></div><div><p>사진 로딩중</p></div><div class="like"></div><div class="dislike"></div></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- <ul swing-stack>
+			<li class="photos" swing-card ng-repeat="photo in photos">
+				<img ng-src={{photo.image}} />
+			</li>
+		</ul> -->
+	</body>
 	
 </ion-view>
