@@ -202,44 +202,72 @@ angular.module('starter.controllers', [])
 			$scope.modal.show();
 		};
 
-
-		$http.get('js/photos.json').success(function (response){
-			
-			$scope.photos= response.a;
-
-			var html_slide = ""
-
-			$.each($scope.photos, function (index, value) {
-
-				value.comment = "나의 데일리룩"; 
-
-				html_slide += '<li class="pane' + (index % 1 + 3)  + '" id="' + value.id + '"><div class="img" pid="' + value.id + '" style="background: url(\''+ value.image +'\') no-repeat scroll center center;background-size: cover;"></div>';
-			
-				html_slide += "<div style='height:22px;'></div>";
-			
-				html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.id + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.comment ? value.comment : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
-			});
-
-			$("#lis").html(html_slide);
-			componentHandler.upgradeDom(); // CSS 적용
-
-			goTinder();
-
-		});
+		getPhotos()
 
 		function goTinder() {
 
+			$scope.count = 5;
+
 			$("#tinderslide").jTinder({
 					onDislike: function (item) {
+						$scope.count--;
+						console.log($scope.count);
+						if($scope.count == 0)
+						{
+							getPhotos();
+						}
 					},
 					onLike: function (item) {
+						$scope.count--;
+						console.log($scope.count);
+						if($scope.count == 0)
+						{
+							getPhotos();
+						}
 					},
 					animationRevertSpeed: 200,
 					animationSpeed: 400,
 					threshold: 1,
 					likeSelector: '.like',
 					dislikeSelector: '.dislike'
+
+			
+		})}
+
+		function getPhotos() {
+			console.log('getPhotos');
+
+			$("#tinderslide").remove();
+			$("#tinderdiv").append('<div id="tinderslide" style="margin-top:25px !important;margin-left:-60px !important; width:420px; height:630px;"><ul id="lis"><div class="mdl-spinner mdl-js-spinner is-active"></div><br><br><button class="mdl-button mdl-js-button mdl-js-ripple-effect">재요청</button></ul></div>');
+			componentHandler.upgradeDom(); // CSS 적용
+
+
+			$http.get('js/photos.json').success(function (response){
+			
+
+				$scope.photos= response.a;
+
+				var html_slide = ""
+
+				$.each($scope.photos, function (index, value) {
+
+					value.comment = "나의 데일리룩"; 
+
+					html_slide += '<li class="pane3 id="' + value.id + '"><div class="img" pid="' + value.id + '" style="background: url(\''+ value.image +'\') no-repeat scroll center center;background-size: cover;"></div>';
+				
+					html_slide += "<div style='height:22px;'></div>";
+				
+					html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.id + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.comment ? value.comment : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
+				});
+
+				$("#lis").html(html_slide);
+				componentHandler.upgradeDom(); // CSS 적용
+				
+				goTinder();
+
 			});
+
+
 			
 		}
 
