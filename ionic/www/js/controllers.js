@@ -186,6 +186,7 @@ angular.module('starter.controllers', [])
 
 	.controller('HomeCtrl', function($scope, $ionicModal, $http) {
 
+
 		$scope.sex = { value : 2 }
 
 		$ionicModal.fromTemplateUrl('templates/options.html',{	
@@ -210,7 +211,7 @@ angular.module('starter.controllers', [])
 
 				value.comment = "나의 데일리룩"; 
 
-				html_slide += '<li class="pane' + (index + 1) + '" id="' + value.id + '"><div class="img" pid="' + value.id + '" style="background: url(\''+ value.image +'\') no-repeat scroll center center;background-size: cover;"></div>';
+				html_slide += '<li class="pane' + (index % 1 + 3)  + '" id="' + value.id + '"><div class="img" pid="' + value.id + '" style="background: url(\''+ value.image +'\') no-repeat scroll center center;background-size: cover;"></div>';
 			
 				html_slide += "<div style='height:22px;'></div>";
 			
