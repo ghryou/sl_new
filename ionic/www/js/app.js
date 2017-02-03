@@ -78,7 +78,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 				url: '/gallery',
 				views: {
 					'menuContent': {
-						templateUrl: 'templates/gallery.html'
+						templateUrl: 'templates/gallery.html',
+						controller: 'GalleryCtrl'
 					}
 				}
 			})

@@ -7,8 +7,6 @@ var _ = require('lodash')
 var cors = require('cors')
 var Photo = require('./models/photo')
 var User = require('./models/user')
-var cors = require('cors')
-
 var photoPath = 'res/photos/'
 
 app.use(cors());
@@ -57,9 +55,10 @@ app.get('/api/bestlook', function(req,res){
 	var minimum = (new Date((new Date()).getTime()-(60*60*1000)));
 
 	Photo.find({date: { $gte: minimum }}, function(err,docs){
-		res.json(docs)	
-	}).sort({score : -1}).limit(5)		
+		res.json(docs)
+	}).sort({score : -1}).limit(40)		
 })
+
 
 /* Snaplook Login API */
 app.use('/api/session', require('./controllers/api/session'))

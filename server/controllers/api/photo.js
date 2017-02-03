@@ -4,6 +4,7 @@ var User = require('../../models/user')
 
 var photoPath = 'res/photos/'
 
+
 router.put('/:path/like/:inc', function(req, res, next){
     var path = req.params.path
     var realPath = photoPath + path
@@ -25,14 +26,14 @@ router.get(['/','/:path'], function(req, res, next){
     
 	if (path){
 	    Photo.find({image_path: realPath},function(err,docs){
-	        res.sendFile('./public/'+path, {"root":__dirname})
+	        res.sendFile('../../public'+realPath, {"root":__dirname})
 	    })
     }else{
 	    Photo.find(function(err, docs) {
 	        if(err){return next(err)}
 	        
 	        var res_docs = []
-	        for(var i=0; i<5; i++){
+	        for(var i=0; i<10; i++){
 	            var index = Math.floor((Math.random() * docs.length) + 1)
 	            console.log(index)
 	            res_docs.push(docs[index-1])
