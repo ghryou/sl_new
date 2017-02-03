@@ -27,8 +27,8 @@
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     <preference name="iosPersistentFileLocation" value="Library"/>
-</widget>
-  <content src="index.html"/>
+   
+	<content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
@@ -93,5 +93,5 @@
     <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
     <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
-</widget>
->>>>>>> stash
+ </widget>
+

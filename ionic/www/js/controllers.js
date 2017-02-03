@@ -4,21 +4,21 @@ angular.module('starter.controllers', [])
 
 	.factory('UserAuth', function ($window) {
 		var UserAuth= this
-		
+
 		UserAuth.removeToken = function () {
 			var res = $window.localStorage.token ? true : false
 			$window.localStorage.token = null
 			return res
 		}
-    		UserAuth.setToken = function (token) {
-        		return $window.localStorage.token = token;
-    		}
-    		UserAuth.getToken = function () {
-        		return $window.localStorage.token;
-    		}
+		UserAuth.setToken = function (token) {
+			return $window.localStorage.token = token;
+		}
+		UserAuth.getToken = function () {
+			return $window.localStorage.token;
+		}
 		UserAuth.isSessionActive = function () {
-        		return $window.localStorage.token ? true : false;
-    		}
+			return $window.localStorage.token ? true : false;
+		}
 		UserAuth.setCurrentUser = function (user){
 			if(user) {
 				$window.localStorage.setItem('CurrentUser', angular.toJson(user))
@@ -90,21 +90,10 @@ angular.module('starter.controllers', [])
 
 	})
 
-	.controller('HomeCtrl', function($scope, $ionicModal, $http) {
 
 
-		$scope.sex = { value : 2 }
+	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile) {
 
-		$ionicModal.fromTemplateUrl('templates/options.html',{	
-			scope : $scope			
-		}).then(function(modal){
-			$scope.modal = modal;
-
-		});
-	
-		$scope.showOptions = function() {
-			$scope.modal.show();
-		};
 
 		getPhotos()
 
@@ -113,30 +102,30 @@ angular.module('starter.controllers', [])
 			$scope.count = 5;
 
 			$("#tinderslide").jTinder({
-					onDislike: function (item) {
-						$scope.count--;
-						console.log($scope.count);
-						if($scope.count == 0)
-						{
-							getPhotos();
-						}
-					},
-					onLike: function (item) {
-						$scope.count--;
-						console.log($scope.count);
-						if($scope.count == 0)
-						{
-							getPhotos();
-						}
-					},
-					animationRevertSpeed: 200,
-					animationSpeed: 400,
-					threshold: 1,
-					likeSelector: '.like',
-					dislikeSelector: '.dislike'
+				onDislike: function (item) {
+					$scope.count--;
+					console.log($scope.count);
+					if($scope.count == 0)
+					{
+						getPhotos();
+					}
+				},
+				onLike: function (item) {
+					$scope.count--;
+					console.log($scope.count);
+					if($scope.count == 0)
+					{
+						getPhotos();
+					}
+				},
+				animationRevertSpeed: 200,
+				animationSpeed: 400,
+				threshold: 1,
+				likeSelector: '.like',
+				dislikeSelector: '.dislike'
 
-			
-		})}
+
+			})}
 
 		function getPhotos() {
 			console.log('getPhotos');
@@ -147,33 +136,63 @@ angular.module('starter.controllers', [])
 
 
 			$http.get(root+'/api/photo').then(function (res){
-			
-			    $scope.photos= res.data;
-			    console.log(res.data)
+
+				$scope.photos= res.data;
+				console.log(res.data)
 
 				var html_slide = ""
 
 				$.each($scope.photos, function (index, value) {
 
 					html_slide += '<li class="pane3 id="' + value.username + '"><div class="img" pid="' + value.username + '" style="background: url(\''+ 'http://localhost:3000/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
-				
+
 					html_slide += "<div style='height:22px;'></div>";
-				
+
 					html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.explanation ? value.explanation : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
 				});
 
 				$("#lis").html(html_slide);
 				componentHandler.upgradeDom(); // CSS 적용
-				
+
 				goTinder();
 			})
+
 
 		}
 
 
+
+
+
+		/*// upload 하는 부분 from camera or gallery
+		$scope.upload = function(){
+			var options = (root+"/admin/photo", "/android_asset/www/img/ionic.png", options).then(function(result){
+				console.log("SUCCESS: " + JSON.stringify(result.response));
+
+			},function(error){
+				console.log(error);
+			}}
+			*/
+
+
+
+		$scope.sex = { value : 2 }
+
+		$ionicModal.fromTemplateUrl('templates/options.html',{	
+			scope : $scope			
+		}).then(function(modal){
+			$scope.modal = modal;
+
+		});
+
+		$scope.showOptions = function() {
+			$scope.modal.show();
+		};
+
+
 		$scope.hideOptions = function(){
 			$scope.modal.hide();
-				};
+		};
 
 		$scope.$on('$destroy', function(){ // when current view destroys , delete modal too
 			$scope.modal.remove();
@@ -183,12 +202,21 @@ angular.module('starter.controllers', [])
 	})
 
 	.controller('BestLookCtrl', function($scope, $http){
-	
+
 		$http.get(root+'/api/bestlook').success(function(images){
-		    $scope.images=images;
+			$scope.images=images;
 		});
-	
+
 		/*	var ithBestLook = function(i){
+=======
+			$scope.images= images;
+
+		});
+	})
+
+
+		/*	var ithBestLook = function(i){
+>>>>>>> stash
 			$http.get($scope.images[i].image_path)
 				.success(function(image) {
 					console.log('Test');
@@ -197,41 +225,108 @@ angular.module('starter.controllers', [])
 					$scope.bestLooks.push(image);
 				}).error(function(data){console.log("The request isn't working");}); }
 
-	
+
 		var getBestLook = function(){	
 			for(var i=0; i<$scope.images.length; i++){
 				ithBestLook(i);
 			}
 		}
-		
+
 		getBestLook();
 
-		*/
+*/
+	})
+	.controller('GalleryCtrl', function($scope, $http, $ionicModal){
+
+
+		$scope.images = [];
+		$scope.pages=0;
+		$scope.total=0;
+
+		$http.get(root+'/api/bestlook').success(function(images){
+			$scope.allImages= images;
+			$scope.total+= images.length;
+
+			console.log($scope.total, " images loaded completed");
+			if($scope.pages==0) $scope.getMoreImages();
+
+		}).error(function(err){
+
+			console.log(err);
+
+		});
+
+
+		// showImages- scroll
+		$scope.showImages = function(index) {
+			$scope.activeSlide = index;
+			$scope.showModal('templates/imageModal.html');
+		}
+
+		/*
+		$scope.zoomMin = 1;
+		$scope.showImages = function(index) {
+		  $scope.activeSlide = index;
+		  $scope.showModal('templates/imageModal_zoom.html');
+		};*/
+
+
+		$scope.showModal = function(templateUrl) {
+			$ionicModal.fromTemplateUrl(templateUrl, {
+				scope: $scope,
+				//animation: 'slide-in-up' for slide
+			}).then(function(modal) {
+				$scope.modal = modal;
+				$scope.modal.show();
+			});
+		}
+
+		// Close the modal
+		$scope.closeModal = function() {
+			$scope.modal.hide();
+			$scope.modal.remove()
+		};
+
+		$scope.updateSlideStatus = function(slide) {
+			var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+			if (zoomFactor == $scope.zoomMin) {
+				$ionicSlideBoxDelegate.enableSlide(true);
+			} else {
+				$ionicSlideBoxDelegate.enableSlide(false);
+			}
+		};
+
+
+		$scope.getMoreImages = function(){
+
+			$scope.loadingUnit = 8;
+
+			for( i =0 ; i < $scope.loadingUnit ; i++){
+				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
+
+					$scope.images.push($scope.allImages[$scope.loadingUnit * $scope.pages + i])
+				}; 
+				console.log("loaded images # is "+ $scope.images.length)
+			}
+
+			$scope.pages++;
+
+			console.log("getMoreImages!"+"pages: "+$scope.pages)
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		}
+
+	}	
 	})
 
-	.controller("CordovaController", function($scope, $cordovaFile){
-	
-	
-	$scope.upload = function(){
-		var options(root+"/admin/photo", "/android_asset/www/img/ionic.png", options).then(function(result){
-			console.log("SUCCESS: " + JSON.stringify(result.response));
-	
-		},function(error){
-		console.log(error);
-		});
-	
-	}	
-});
-	
-	
+
 
 	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth) {
-		
+
 		$scope.loginNew = function(){
 			$scope.login_login = true
 			$scope.login_new = true
 		};
-		
+
 		$scope.loginNewCheck_id = function(){
 			$http.get(root+'/api/user/check/'+$scope.loginNew.username).
 				then(function (res){
@@ -245,13 +340,13 @@ angular.module('starter.controllers', [])
 			if ($scope.loginNew.password != $scope.loginNew.password_c){ $scope.login_new_pw = true }
 			else { $scope.login_new_pw = false }
 		}
-	
+
 		$scope.loginNew_submit = function(){
 			$http.post(root+'/api/user/',{
-					username:$scope.loginNew.username,
-					password:$scope.loginNew.password,
-					gender:$scope.loginNew.gender=='F'?0:1,
-					insta:$scope.loginNew.instaID?$scope.loginNew.instaID:null}).
+				username:$scope.loginNew.username,
+				password:$scope.loginNew.password,
+				gender:$scope.loginNew.gender=='F'?0:1,
+				insta:$scope.loginNew.instaID?$scope.loginNew.instaID:null}).
 				then(function (res){
 					console.log(res.data)
 					UserSvc.login($scope.loginNew.username, $scope.loginNew.password).
@@ -269,7 +364,7 @@ angular.module('starter.controllers', [])
 						})
 				})
 		}
-	
+
 		$scope.loginNew_back = function(){
 			$scope.login_login = false
 			$scope.login_new = false
@@ -320,18 +415,25 @@ angular.module('starter.controllers', [])
 			UserAuth.removeCurrentUser()
 		}
 	})
-	
+
 	.controller('InquiryCtrl', function($scope, $http, $timeout, UserAuth){
-	    $scope.comment_sended = false
-	    $scope.sendInquiry = function(){
-	        $http.post(root+'/api/inquiry/',{
-					comment:$scope.comment,
-					user:UserAuth.isSessionActive()?UserAuth.getCurrentUser():null}).
+		$scope.comment_sended = false
+		$scope.sendInquiry = function(){
+			$http.post(root+'/api/inquiry/',{
+				comment:$scope.comment,
+				user:UserAuth.isSessionActive()?UserAuth.getCurrentUser():null}).
 				then(function (res){
 					console.log(res.data)
-	                $scope.comment = ''
-	                $scope.comment_sended = true
-	                $timeout(function(){ $scope.comment_sended = false }, 1000);
+					$scope.comment = ''
+					$scope.comment_sended = true
+					$timeout(function(){ $scope.comment_sended = false }, 1000);
 				})
-        }
+		}
 	});
+
+
+
+
+
+
+

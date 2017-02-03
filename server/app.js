@@ -7,7 +7,6 @@ var _ = require('lodash')
 var cors = require('cors')
 var Photo = require('./models/photo')
 var User = require('./models/user')
-var cors = require('cors')
 
 app.use(cors());
 app.use(express.static('public'));
@@ -57,9 +56,9 @@ app.get('/api/bestlook', function(req,res){
 
 	Photo.find({date: { $gte: minimum }}, function(err,docs){
 		res.json(docs)	
-	}).sort({score : -1}).limit(5)
-			
+	}).sort({score : -1}).limit(5)	
 })
+
 
 /* Snaplook Login API */
 app.use('/api/session', require('./controllers/api/session'))
