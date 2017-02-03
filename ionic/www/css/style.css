@@ -46,3 +46,14 @@ img {
 	top: 48px;
 } 
 
+.full-size-width {
+  width: 100%;
+}
+
+.vertical-center {
+  min-height: 80%;
+  min-height: 80vh;
+
+  display: flex;
+  align-items: center;
+}

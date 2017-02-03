@@ -95,7 +95,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache'])
 				url: '/inquiry',
 				views: {
 					'menuContent': {
-						templateUrl: 'templates/inquiry.html'
+						templateUrl: 'templates/inquiry.html',
+						controller: 'InquiryCtrl'
 					}
 				}
 			});
