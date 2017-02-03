@@ -323,7 +323,7 @@ angular.module('starter.controllers', [])
 
 
 	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth) {
-
+      
 		$scope.loginNew = function(){
 			$scope.login_login = true
 			$scope.login_new = true
@@ -416,6 +416,11 @@ angular.module('starter.controllers', [])
 			UserAuth.removeToken()
 			UserAuth.removeCurrentUser()
 		}
+	       
+        if(UserAuth.isSessionActive()){
+            $scope.login_login = true
+			$scope.profile_show()
+        }
 	})
 
 	.controller('InquiryCtrl', function($scope, $http, $timeout, UserAuth){

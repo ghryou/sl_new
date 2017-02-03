@@ -2,7 +2,7 @@
   <ion-content>
 <div class="vertical-center">
 <div class="full-size-width">
-    <form ng-submit="doLogin()" ng-hide="UserAuth.isSessionActive()||login_login">
+    <form ng-submit="doLogin()" ng-hide="login_login">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
@@ -20,7 +20,7 @@
       </div>
     </form>
 
-    <form ng-submit="loginNew_submit()" ng-show="!UserAuth.isSessionActive()&&login_new">
+    <form ng-submit="loginNew_submit()" ng-show="login_new">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
@@ -52,7 +52,7 @@
       </div>
     </form>
 
-    <div class="list" ng-show="UserAuth.isSessionActive()||login_profile">
+    <div class="list" ng-show="login_profile">
       <label class="item item-input">
 	    <span class="input-label">Username</span>
 	    <div><strong> {{profile_username}} </strong></div>
