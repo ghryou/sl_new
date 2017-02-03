@@ -151,13 +151,11 @@ angular.module('starter.controllers', [])
 
 				$.each($scope.photos, function (index, value) {
 
-					html_slide += '<li class="pane3"><div class="img" pid="' + value.username 
-					html_slide += '" style="background: url(\''+ 'http://localhost:3000/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
-				
+					html_slide += '<li class="pane3 id="' + value.username + '"><div class="img" pid="' + value.username + '" style="background: url(\''+ 'http://localhost:3000/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
+
 					html_slide += "<div style='height:22px;'></div>";
-				
-					html_slide += '<div  style="padding-top:0px;"><p style="font-size:12px;">' + (value.explanation ? value.explanation : "나의 데일리룩") 
-					html_slide += '</p></div><div class="like"></div><div class="dislike"></div></li>';
+
+					html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.explanation ? value.explanation : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
 				});
 
 				$("#lis").html(html_slide);
@@ -245,27 +243,38 @@ angular.module('starter.controllers', [])
 
 */
 	})
-	.controller('GalleryCtrl', function($scope, $http, $ionicModal){
+	.controller('GalleryCtrl', function($scope, $http, $ionicModal, UserAuth){
 
 
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;
+		$scope.getCurrentUser= UserAuth.getCurrentUser;
+		$scope.isSessionActive = UserAuth.isSessionActive;
+		if(!UserAuth.isSessionActive()){ 
 
-		$http.get(root+'/api/bestlook').success(function(images){
-			$scope.allImages= images;
-			$scope.total+= images.length;
+			alert ("please login!") 
 
-			console.log($scope.total, " images loaded completed");
-			if($scope.pages==0) $scope.getMoreImages();
+		}
 
-		}).error(function(err){
+			$scope.user =  $scope.getCurrentUser();  
 
-			console.log(err);
+			$http.get(root+'/api/user/'+$scope.user).success(function(info){
+				
+				console.log($scope.user)
+				$scope.userInfo= info;
+				$scope.uploadedImages = $scope.userInfo.photo_upload;
+				$scope.total = $scope.uploadedImages.length;
+				
+				$scope.getMoreImages();
 
-		});
+				console.log($scope.images,$scope.total+": uploaded image urls loaded completed");
+			}).error(function(err){
 
+				console.log(err);
 
+			});
+		
 		// showImages- scroll
 		$scope.showImages = function(index) {
 			$scope.activeSlide = index;
@@ -313,7 +322,7 @@ angular.module('starter.controllers', [])
 			for( i =0 ; i < $scope.loadingUnit ; i++){
 				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
 
-					$scope.images.push($scope.allImages[$scope.loadingUnit * $scope.pages + i])
+					$scope.images.push($scope.uploadedImages[$scope.loadingUnit * $scope.pages + i])
 				}; 
 				console.log("loaded images # is "+ $scope.images.length)
 			}
@@ -471,8 +480,8 @@ angular.module('starter.controllers', [])
 				
 				$scope.getMoreImages();
 
-				console.log($scope.images, " image urls loaded completed");
-
+				console.log($scope.images, "liked image urls loaded completed");
+				console.log($scope.images[1]+$scope.images[3]);
 			}).error(function(err){
 
 				console.log(err);

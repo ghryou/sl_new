@@ -1,12 +1,17 @@
 <ion-view view-title="BestLook">
 	<ion-content>
 		<div class="list card" ng-repeat="image in images" >
-			
+
 			<div class="item item-image">	
 				<img ng-src="http://localhost:3000/res/photos/{{image.image_path}}">
 			</div>
 			<div class="well">
-				<p class="center"> " {{image.explanation}} " </p>
+				<div>
+					<h1> 
+						<span class="icon ion-trophy">	{{$index+1}} </span>
+					</h1>
+				</div>
+				<p class="center"> {{image.explanation}}  </p>
 				<p class="center"> <span class="icon ion-heart"> Like {{image.score*100}}% / total : {{image.score}} / total </span> </p>
 			</div>
 		</div>

@@ -64,7 +64,7 @@ app.get('/api/bestlook', function(req,res){
 
 	Photo.find({date: { $gte: minimum }}, function(err,docs){
 		res.json(docs)	
-	}).sort({score : -1}).limit(40)	
+	}).sort({score : -1}).limit(5)	
 })
 
 
