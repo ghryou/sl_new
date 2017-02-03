@@ -96,7 +96,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 				url: '/inquiry',
 				views: {
 					'menuContent': {
-						templateUrl: 'templates/inquiry.html'
+						templateUrl: 'templates/inquiry.html',
+						controller: 'InquiryCtrl'
 					}
 				}
 			});

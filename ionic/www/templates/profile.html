@@ -1,6 +1,7 @@
 <ion-view view-title="My-profile">
   <ion-content>
-
+<div class="vertical-center">
+<div class="full-size-width">
     <form ng-submit="doLogin()" ng-hide="UserAuth.isSessionActive()||login_login">
       <div class="list">
         <label class="item item-input">
@@ -53,19 +54,20 @@
 
     <div class="list" ng-show="UserAuth.isSessionActive()||login_profile">
       <label class="item item-input">
-	<span class="input-label">Username</span>
-	<div><strong> {{profile_username}} </strong></div>
+	    <span class="input-label">Username</span>
+	    <div><strong> {{profile_username}} </strong></div>
       </label>
       <label class="item item-input">
-	<span class="input-label">Gender</span>
-	<div><strong> {{profile_gender}} </strong></div>
+	    <span class="input-label">Gender</span>
+	    <div><strong> {{profile_gender}} </strong></div>
       </label>
       <label class="item item-input">
         <span class="input-label">Instagram ID</span>
-	<div><strong> {{profile_insta}} </strong></div>
+	    <div><strong> {{profile_insta}} </strong></div>
       </label>
       <span class="col-xs-12 col-md-12 label label-info button button-block" ng-click="profile_logout()">Log out</span>
     </div>
-
+</div>
+</div>
   </ion-content>
 </ion-view>

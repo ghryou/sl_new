@@ -90,102 +90,6 @@ angular.module('starter.controllers', [])
 
 	})
 
-	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth) {
-		
-		$scope.loginNew = function(){
-			$scope.login_login = true
-			$scope.login_new = true
-		};
-		
-		$scope.loginNewCheck_id = function(){
-			$http.get(root+'/api/user/check/'+$scope.loginNew.username).
-				then(function (res){
-					$scope.login_new_id = res.data
-					if(res.data) {$scope.login_new_en = true}
-					else {$scope.login_new_en = false}
-				})
-		}
-
-		$scope.loginNewCheck_pw = function(){
-			if ($scope.loginNew.password != $scope.loginNew.password_c){ $scope.login_new_pw = true }
-			else { $scope.login_new_pw = false }
-		}
-	
-		$scope.loginNew_submit = function(){
-			$http.post(root+'/api/user/',{
-					username:$scope.loginNew.username,
-					password:$scope.loginNew.password,
-					gender:$scope.loginNew.gender=='F'?0:1,
-					insta:$scope.loginNew.instaID?$scope.loginNew.instaID:null}).
-				then(function (res){
-					console.log(res.data)
-					UserSvc.login($scope.loginNew.username, $scope.loginNew.password).
-						then(function (res2){
-							$scope.$emit('login', res2.data)
-							UserAuth.setCurrentUser($scope.loginNew.username)
-							UserAuth.setToken(res2.data)
-							$scope.loginNew.username = ''
-							$scope.loginNew.password = ''
-							$scope.loginNew.gender = ''
-							$scope.loginNew.instaID = ''
-							$scope.login_new = false
-							$scope.login_login = true
-							$scope.profile_show()
-						})
-				})
-		}
-	
-		$scope.loginNew_back = function(){
-			$scope.login_login = false
-			$scope.login_new = false
-		}
-
-		$scope.doLogin = function() {
-			UserSvc.login($scope.loginData.username, $scope.loginData.password).
-				then(function (res){
-					if(res){
-						$scope.$emit('login', res.data)
-						UserAuth.setCurrentUser($scope.loginData.username)
-						UserAuth.setToken(res.data)
-						$scope.login_login = true
-						$scope.login_wrong = false
-						$scope.profile_show()
-					}else{
-						$scope.login_wrong = true
-					}
-				})
-		};
-
-		$scope.profile_show = function(){
-			$scope.login_profile = true
-			if(UserAuth.isSessionActive()){
-				$scope.profile_username = UserAuth.getCurrentUser()
-			}else {$scope.profile_username = "Please Login Again"}
-
-			$http.get(root+'/api/user/check/'+$scope.profile_username).
-				then(function (res){
-					if(res.data) {
-						$scope.profile_gender = res.data.gender==0?"Female":"Male"
-						if(res.data.insta != null){
-							$scope.profile_insta = res.data.insta
-						}else{
-							$scope.profile_insta = "We Need Your Instagram Bro"
-						}
-					}
-					else {$scope.profile_username = "Please Login Again"}
-				})
-		}
-
-		$scope.profile_logout = function(){
-			$scope.login_profile = false
-			$scope.login_login = false
-			$scope.loginData.username = ''
-			$scope.loginData.password = ''
-			UserAuth.removeToken()
-			UserAuth.removeCurrentUser()
-		}
-	})
-
 	.controller('HomeCtrl', function($scope, $ionicModal, $http) {
 
 
@@ -281,10 +185,8 @@ angular.module('starter.controllers', [])
 	.controller('BestLookCtrl', function($scope, $http){
 	
 		$http.get(root+'/api/bestlook').success(function(images){
-		$scope.images= images;
-	
+		    $scope.images=images;
 		});
-
 	
 		/*	var ithBestLook = function(i){
 			$http.get($scope.images[i].image_path)
@@ -320,3 +222,116 @@ angular.module('starter.controllers', [])
 	
 	}	
 });
+	
+	
+
+	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth) {
+		
+		$scope.loginNew = function(){
+			$scope.login_login = true
+			$scope.login_new = true
+		};
+		
+		$scope.loginNewCheck_id = function(){
+			$http.get(root+'/api/user/check/'+$scope.loginNew.username).
+				then(function (res){
+					$scope.login_new_id = res.data
+					if(res.data) {$scope.login_new_en = true}
+					else {$scope.login_new_en = false}
+				})
+		}
+
+		$scope.loginNewCheck_pw = function(){
+			if ($scope.loginNew.password != $scope.loginNew.password_c){ $scope.login_new_pw = true }
+			else { $scope.login_new_pw = false }
+		}
+	
+		$scope.loginNew_submit = function(){
+			$http.post(root+'/api/user/',{
+					username:$scope.loginNew.username,
+					password:$scope.loginNew.password,
+					gender:$scope.loginNew.gender=='F'?0:1,
+					insta:$scope.loginNew.instaID?$scope.loginNew.instaID:null}).
+				then(function (res){
+					console.log(res.data)
+					UserSvc.login($scope.loginNew.username, $scope.loginNew.password).
+						then(function (res2){
+							$scope.$emit('login', res2.data)
+							UserAuth.setCurrentUser($scope.loginNew.username)
+							UserAuth.setToken(res2.data)
+							$scope.loginNew.username = ''
+							$scope.loginNew.password = ''
+							$scope.loginNew.gender = ''
+							$scope.loginNew.instaID = ''
+							$scope.login_new = false
+							$scope.login_login = true
+							$scope.profile_show()
+						})
+				})
+		}
+	
+		$scope.loginNew_back = function(){
+			$scope.login_login = false
+			$scope.login_new = false
+		}
+
+		$scope.doLogin = function() {
+			UserSvc.login($scope.loginData.username, $scope.loginData.password).
+				then(function (res){
+					if(res){
+						$scope.$emit('login', res.data)
+						UserAuth.setCurrentUser($scope.loginData.username)
+						UserAuth.setToken(res.data)
+						$scope.login_login = true
+						$scope.login_wrong = false
+						$scope.profile_show()
+					}else{
+						$scope.login_wrong = true
+					}
+				})
+		};
+
+		$scope.profile_show = function(){
+			$scope.login_profile = true
+			if(UserAuth.isSessionActive()){
+				$scope.profile_username = UserAuth.getCurrentUser()
+			}else {$scope.profile_username = "Please Login Again"}
+
+			$http.get(root+'/api/user/check/'+$scope.profile_username).
+				then(function (res){
+					if(res.data) {
+						$scope.profile_gender = res.data.gender==0?"Female":"Male"
+						if(res.data.insta != null){
+							$scope.profile_insta = res.data.insta
+						}else{
+							$scope.profile_insta = "We Need Your Instagram Bro"
+						}
+					}
+					else {$scope.profile_username = "Please Login Again"}
+				})
+		}
+
+		$scope.profile_logout = function(){
+			$scope.login_profile = false
+			$scope.login_login = false
+			$scope.loginData.username = ''
+			$scope.loginData.password = ''
+			UserAuth.removeToken()
+			UserAuth.removeCurrentUser()
+		}
+	})
+	
+	.controller('InquiryCtrl', function($scope, $http, $timeout, UserAuth){
+	    $scope.comment_sended = false
+	    $scope.sendInquiry = function(){
+	        $http.post(root+'/api/inquiry/',{
+					comment:$scope.comment,
+					user:UserAuth.isSessionActive()?UserAuth.getCurrentUser():null}).
+				then(function (res){
+					console.log(res.data)
+	                $scope.comment = ''
+	                $scope.comment_sended = true
+	                $timeout(function(){ $scope.comment_sended = false }, 1000);
+				})
+        }
+	});
