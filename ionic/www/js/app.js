@@ -43,6 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 				templateUrl: 'templates/menu.html',
 				controller: 'AppCtrl'
 			})
+			
 			.state('app.home', {
 				url: '/home',
 				views: {

@@ -34,6 +34,18 @@ angular.module('starter.controllers', [])
 			$window.localStorage.removeItem('CurrentUser')
 			return true
 		}
+		UserAuth.setOptions = function (options){
+		    $window.localStorage.setItem('Options', angular.toJson(options))
+			return true
+		}
+		UserAuth.getOptions = function (){
+		    var options = angular.fromJson($window.localStorage.getItem('Options'))
+		    if (options == null){
+		        options = { gender: 2 }
+		    }
+		    console.log(options.gender)
+		    return options
+		}
 		return UserAuth
 	})
 
@@ -92,8 +104,8 @@ angular.module('starter.controllers', [])
 	})
 
 	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth) {
-
-        $scope.sex = { value : 2 }
+	
+        $scope.sex = { value : UserAuth.getOptions().gender }
         $scope.requestURL = root+'/api/photo'
         
         $scope.setURL = function (){
@@ -112,7 +124,6 @@ angular.module('starter.controllers', [])
 			$("#tinderslide").jTinder({
 				onDislike: function (item) {
 					$scope.count--;
-					console.log($scope.count);
 					if($scope.count == 0)
 					{
 						getPhotos();
@@ -120,11 +131,10 @@ angular.module('starter.controllers', [])
 				},
 				onLike: function (item) {
 					$scope.count--;
-					console.log($scope.count);
 					if(UserAuth.isSessionActive()){
 					
 					    $http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like/'+$scope.photos[$scope.count].image_path)
-					        .success(function(res){ console.log(res); })
+					        .success(function(res){ })
 					        .error(function(err){ console.log(err); });
 					}
 					
@@ -143,8 +153,7 @@ angular.module('starter.controllers', [])
 			})}
 
 		function getPhotos() {
-			console.log('getPhotos');
-
+		
 			$("#tinderslide").remove();
 			$("#tinderdiv").append('<div id="tinderslide" style="margin-top:25px !important;margin-left:-60px !important; width:420px; height:630px;"><ul id="lis"><div class="mdl-spinner mdl-js-spinner is-active"></div><br><br><button class="mdl-button mdl-js-button mdl-js-ripple-effect">재요청</button></ul></div>');
 			componentHandler.upgradeDom(); // CSS 적용
@@ -153,7 +162,6 @@ angular.module('starter.controllers', [])
 			$http.get($scope.requestURL).then(function (res){
 
 				$scope.photos = res.data;
-				console.log(res.data)
 
 				var html_slide = ""
 
@@ -202,6 +210,9 @@ angular.module('starter.controllers', [])
 		$scope.hideOptions = function(){
 		    $scope.setURL();
 		    getPhotos();
+		    var options = UserAuth.getOptions();
+		    options.gender = $scope.sex.value
+		    UserAuth.setOptions(options);
 			$scope.modal.hide();
 		};
 
@@ -409,7 +420,6 @@ angular.module('starter.controllers', [])
 
 		$scope.profile_show = function(){
 			$scope.login_profile = true
-			console.log($window.localStorage.token)
 			if(UserAuth.isSessionActive()){
 				$scope.profile_username = UserAuth.getCurrentUser()
 			    $http.get(root+'/api/user/'+$scope.profile_username).
