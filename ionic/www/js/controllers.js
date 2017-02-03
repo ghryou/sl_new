@@ -91,13 +91,20 @@ angular.module('starter.controllers', [])
 
 	})
 
-
-
 	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth) {
 
-
+        $scope.sex = { value : 2 }
+        $scope.requestURL = root+'/api/photo'
+        
+        $scope.setURL = function (){
+            if($scope.sex.value == 2) { $scope.requestURL = root+'/api/photo' }
+            else if($scope.sex.value == 1) { $scope.requestURL = root+'/api/photo/gender/1' }
+            else { $scope.requestURL = root+'/api/photo/gender/0' }
+            return 
+        }
+        
 		getPhotos()
-
+		
 		function goTinder() {
             var countMax = 5;
 			$scope.count = countMax;
@@ -115,9 +122,7 @@ angular.module('starter.controllers', [])
 					$scope.count--;
 					console.log($scope.count);
 					if(UserAuth.isSessionActive()){
-					    console.log("token "+UserAuth.getToken())
-					    console.log("username "+UserAuth.getCurrentUser())
-					    
+					
 					    $http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like/'+$scope.photos[$scope.count].image_path)
 					        .success(function(res){ console.log(res); })
 					        .error(function(err){ console.log(err); });
@@ -145,7 +150,7 @@ angular.module('starter.controllers', [])
 			componentHandler.upgradeDom(); // CSS 적용
 
 
-			$http.get(root+'/api/photo').then(function (res){
+			$http.get($scope.requestURL).then(function (res){
 
 				$scope.photos = res.data;
 				console.log(res.data)
@@ -169,10 +174,7 @@ angular.module('starter.controllers', [])
 
 
 		}
-
-
-
-
+		
 
 		/*// upload 하는 부분 from camera or gallery
 		$scope.upload = function(){
@@ -183,10 +185,7 @@ angular.module('starter.controllers', [])
 				console.log(error);
 			}}
 			*/
-
-
-
-		$scope.sex = { value : 2 }
+			
 
 		$ionicModal.fromTemplateUrl('templates/options.html',{	
 			scope : $scope			
@@ -201,6 +200,8 @@ angular.module('starter.controllers', [])
 
 
 		$scope.hideOptions = function(){
+		    $scope.setURL();
+		    getPhotos();
 			$scope.modal.hide();
 		};
 
