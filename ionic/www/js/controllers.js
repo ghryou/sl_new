@@ -92,14 +92,14 @@ angular.module('starter.controllers', [])
 
 
 
-	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile) {
+	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth) {
 
 
 		getPhotos()
 
 		function goTinder() {
-
-			$scope.count = 5;
+            var countMax = 5;
+			$scope.count = countMax;
 
 			$("#tinderslide").jTinder({
 				onDislike: function (item) {
@@ -113,6 +113,13 @@ angular.module('starter.controllers', [])
 				onLike: function (item) {
 					$scope.count--;
 					console.log($scope.count);
+					
+					if(UserAuth.isSessionActive()){
+					    $http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like/'+$scope.photos[$scope.count].image_path)
+					        .success(function(res){ console.log(res); })
+					        .error(function(err){ console.log(err); });
+					}
+					
 					if($scope.count == 0)
 					{
 						getPhotos();
@@ -137,7 +144,7 @@ angular.module('starter.controllers', [])
 
 			$http.get(root+'/api/photo').then(function (res){
 
-				$scope.photos= res.data;
+				$scope.photos = res.data;
 				console.log(res.data)
 
 				var html_slide = ""
