@@ -44,7 +44,7 @@ app.get('/admin/photo/init', function(req, res){
             image_path : i+'.jpg',
 			score: i,
 			explanation:'Cheer Up!'+i,
-			gender: 0
+			gender: (i>=34)?1:0
     	})
     	console.log(photo)
     	photo.save(function (err, post) {
