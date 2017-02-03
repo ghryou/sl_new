@@ -52,11 +52,11 @@ app.use('/api/photo', require('./controllers/api/photo'))
 /* Snaplook bestlook API */
 app.get('/api/bestlook', function(req,res){
 
-	var minimum = (new Date((new Date()).getTime()-(60*60*1000)));
+	var minimum = (new Date((new Date()).getTime()-(7*60*60*1000)));
 
 	Photo.find({date: { $gte: minimum }}, function(err,docs){
 		res.json(docs)	
-	}).sort({score : -1}).limit(5)	
+	}).sort({score : -1}).limit(40)	
 })
 
 

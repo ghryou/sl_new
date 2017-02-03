@@ -315,7 +315,7 @@ angular.module('starter.controllers', [])
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 		}
 
-	}	
+		
 	})
 
 
@@ -328,7 +328,7 @@ angular.module('starter.controllers', [])
 		};
 
 		$scope.loginNewCheck_id = function(){
-			$http.get(root+'/api/user/check/'+$scope.loginNew.username).
+			$http.get(root+'/api/user/'+$scope.loginNew.username).
 				then(function (res){
 					$scope.login_new_id = res.data
 					if(res.data) {$scope.login_new_en = true}
@@ -392,10 +392,10 @@ angular.module('starter.controllers', [])
 				$scope.profile_username = UserAuth.getCurrentUser()
 			}else {$scope.profile_username = "Please Login Again"}
 
-			$http.get(root+'/api/user/check/'+$scope.profile_username).
+			$http.get(root+'/api/user/'+$scope.profile_username).
 				then(function (res){
 					if(res.data) {
-						$scope.profile_gender = res.data.gender==0?"Female":"Male"
+						$scope.profile_gender = res.data.gender==0? "Female":"Male"
 						if(res.data.insta != null){
 							$scope.profile_insta = res.data.insta
 						}else{

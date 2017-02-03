@@ -62,8 +62,6 @@ img {
 .image-list-thumb {
     padding: 2px 2px 2px 2px;
     height: 100px;
-	-webkitflex-wrap:wrap;
-	flex-wrap:wrap;
 }
  
 .image-modal {
