@@ -7,9 +7,6 @@ var _ = require('lodash')
 var cors = require('cors')
 var Photo = require('./models/photo')
 var User = require('./models/user')
-var cors = require('cors')
-
-var photoPath = 'res/photos/'
 
 app.use(cors());
 app.use(express.static('public'));
@@ -30,20 +27,21 @@ var upload = multer({ storage: _storage })
 app.all('/admin/photo/clean', function(req, res, next){
     Photo.remove(function(err){if(err){return next(err)}})
     Photo.find(function(err, docs){
-	res.json(docs);
+	    res.json(docs);
     })
 })
 app.get('/admin/photo/init', function(req, res){
     for(i=1;i<=10;i++){
-	var photo = new Photo({
+    	var photo = new Photo({
             image_path : i+'.jpg',
 			score: i,
-			explanation:'Cheer Up!'+i 
-	})
-
-	photo.save(function (err, post) {
-            if (err) { return next(err) }
-	})
+			explanation:'Cheer Up!'+i,
+			gender: 0
+    	})
+    	console.log(photo)
+    	photo.save(function (err, post) {
+    	    if(err) {return next(err)}
+    	})
     }
     res.send("end")
 })
@@ -54,17 +52,23 @@ app.use('/api/photo', require('./controllers/api/photo'))
 /* Snaplook bestlook API */
 app.get('/api/bestlook', function(req,res){
 
-	var minimum = (new Date((new Date()).getTime()-(60*60*1000)));
+	var minimum = (new Date((new Date()).getTime()-(7*60*60*1000)));
 
 	Photo.find({date: { $gte: minimum }}, function(err,docs){
 		res.json(docs)	
-	}).sort({score : -1}).limit(5)		
+	}).sort({score : -1}).limit(40)	
 })
+
 
 /* Snaplook Login API */
 app.use('/api/session', require('./controllers/api/session'))
 app.use('/api/user', require('./controllers/api/user'))
 
+/* Snaplook Inquiry API */
+app.post('/api/inquiry', function(req,res,next){
+    console.log(req.body.comment)
+    res.json(req.body.comment)
+})
 
 /* etc */
 app.get('/upload', function(req, res){
