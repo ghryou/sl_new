@@ -23,7 +23,15 @@ var _storage = multer.diskStorage({
 })
 var upload = multer({ storage: _storage })
 
-
+/* Snaplook TEST API */
+app.all('/admin/user/init', function(req, res, next){
+    var user = new User({
+        username:'admin',
+        password:'admin',
+        gender:0,
+        insta:'admin_insta'
+    })
+})
 app.all('/admin/photo/clean', function(req, res, next){
     Photo.remove(function(err){if(err){return next(err)}})
     Photo.find(function(err, docs){
@@ -31,7 +39,7 @@ app.all('/admin/photo/clean', function(req, res, next){
     })
 })
 app.get('/admin/photo/init', function(req, res){
-    for(i=1;i<=10;i++){
+    for(i=1;i<=40;i++){
     	var photo = new Photo({
             image_path : i+'.jpg',
 			score: i,
