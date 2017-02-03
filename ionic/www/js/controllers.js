@@ -124,6 +124,11 @@ angular.module('starter.controllers', [])
 			$("#tinderslide").jTinder({
 				onDislike: function (item) {
 					$scope.count--;
+					
+					$http.put(root+'/api/photo/'+$scope.photos[$scope.count].image_path+'/like/0')
+					    .success(function(res){ })
+					    .error(function(err){ console.log(err); });
+					    
 					if($scope.count == 0)
 					{
 						getPhotos();
@@ -131,8 +136,12 @@ angular.module('starter.controllers', [])
 				},
 				onLike: function (item) {
 					$scope.count--;
+
+					$http.put(root+'/api/photo/'+$scope.photos[$scope.count].image_path+'/like/1')
+					    .success(function(res){ })
+					    .error(function(err){ console.log(err); });
+
 					if(UserAuth.isSessionActive()){
-					
 					    $http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like/'+$scope.photos[$scope.count].image_path)
 					        .success(function(res){ })
 					        .error(function(err){ console.log(err); });

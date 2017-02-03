@@ -58,9 +58,9 @@ router.put('/:path/like/:inc', function(req, res, next){
     
     Photo.findOne({image_path: path},function(err,photo){
         if(inc==0){
-            photo.score--;
+            photo.dislike++;
         }else{
-            photo.score++;
+            photo.like++;
         }
         photo.save(function(err,updated_photo){
             if(err){next(err)}

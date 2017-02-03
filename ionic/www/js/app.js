@@ -35,8 +35,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 
 
 	.config(function($stateProvider, $urlRouterProvider) {
+	    
 		$stateProvider
-
+		
 			.state('app', {
 				url: '/app',
 				abstract: true,
@@ -53,7 +54,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 					}
 				}
 			})
-
+			
 			.state('app.profile', {
 				url: '/profile',
 				views: {
@@ -63,7 +64,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 					}
 				}
 			})
-
+			
 			.state('app.bestlook', {
 				url: '/bestlook',
 				views: {
@@ -83,7 +84,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 					}
 				}
 			})
-
+			
 			.state('app.snapbox', {
 				url: '/snapbox',
 				views: {
@@ -104,7 +105,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 				}
 			});
 
-		;
 		// if none of the above states are matched, use this as the fallback
 
 		$urlRouterProvider.otherwise('/app/home');

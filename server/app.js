@@ -42,7 +42,7 @@ app.get('/admin/photo/init', function(req, res){
     for(i=1;i<=40;i++){
     	var photo = new Photo({
             image_path : i+'.jpg',
-			score: i,
+			like: i,
 			explanation:'Cheer Up!'+i,
 			gender: (i>=34)?1:0
     	})
@@ -64,7 +64,7 @@ app.get('/api/bestlook', function(req,res){
 
 	Photo.find({date: { $gte: minimum }}, function(err,docs){
 		res.json(docs)	
-	}).sort({score : -1}).limit(5)	
+	}).sort({like : -1}).limit(5)	
 })
 
 
