@@ -315,7 +315,7 @@ angular.module('starter.controllers', [])
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 		}
 
-		
+
 	})
 
 
@@ -429,6 +429,104 @@ angular.module('starter.controllers', [])
 					$timeout(function(){ $scope.comment_sended = false }, 1000);
 				})
 		}
+
+	})
+
+
+	.controller('SnapBoxCtrl', function($scope, $http, $ionicModal, UserAuth){
+
+		$scope.images = [];
+		$scope.pages=0;
+		$scope.total=0;
+		$scope.getCurrentUser= UserAuth.getCurrentUser;
+		$scope.isSessionActive = UserAuth.isSessionActive;
+		if(!UserAuth.isSessionActive()){ 
+
+			alert ("please login!") 
+
+		}
+
+			$scope.user =  $scope.getCurrentUser();  
+
+			$http.get(root+'/api/user/'+$scope.user).success(function(info){
+				
+				console.log($scope.user)
+				$scope.userInfo= info;
+				$scope.likedImages = $scope.userInfo.photo_like;
+				$scope.total = $scope.likedImages.length;
+				
+				$scope.getMoreImages();
+
+				console.log($scope.images, " image urls loaded completed");
+
+			}).error(function(err){
+
+				console.log(err);
+
+			});
+		
+		// showImages- scroll
+		$scope.showImages = function(index) {
+			$scope.activeSlide = index;
+			$scope.showModal('templates/imageModal.html');
+		}
+
+		/*
+		$scope.zoomMin = 1;
+		$scope.showImages = function(index) {
+		  $scope.activeSlide = index;
+		  $scope.showModal('templates/imageModal_zoom.html');
+		};*/
+
+
+		$scope.showModal = function(templateUrl) {
+			$ionicModal.fromTemplateUrl(templateUrl, {
+				scope: $scope,
+				//animation: 'slide-in-up' for slide
+			}).then(function(modal) {
+				$scope.modal = modal;
+				$scope.modal.show();
+			});
+		}
+
+		// Close the modal
+		$scope.closeModal = function() {
+			$scope.modal.hide();
+			$scope.modal.remove()
+		};
+
+		$scope.updateSlideStatus = function(slide) {
+			var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+			if (zoomFactor == $scope.zoomMin) {
+				$ionicSlideBoxDelegate.enableSlide(true);
+			} else {
+				$ionicSlideBoxDelegate.enableSlide(false);
+			}
+		};
+
+
+		$scope.getMoreImages = function(){
+
+			$scope.loadingUnit = 8;
+
+			for( i =0 ; i < $scope.loadingUnit ; i++){
+				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
+
+					$scope.images.push($scope.likedImages[$scope.loadingUnit * $scope.pages + i])
+				}; 
+				console.log("loaded images # is "+ $scope.images.length)
+			}
+
+			$scope.pages++;
+
+			console.log("getMoreImages!"+"pages: "+$scope.pages)
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		}
+
+
+
+
+
 	});
 
 

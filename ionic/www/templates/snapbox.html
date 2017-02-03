@@ -1,5 +1,23 @@
-<ion-view view-title="Snapbox">
-  <ion-content>
-    <h1>SnapBox</h1>
-  </ion-content>
+<ion-view view-title="SnapBox">
+
+	<ion-content ng-if="isSessionActive()">  <!-- not login, not rendering  --!>
+
+		<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+			<div class="col col-25" ng-if="$index < images.length">
+				<img ng-src="http://localhost:3000/res/photos/{{images[$index]}}" width="100%"  ng-click="showImages($index)"/>
+			</div>
+			<div class="col col-25" ng-if="$index + 1 < images.length">
+				<img ng-src="http://localhost:3000/res/photos/{{images[$index + 1]}" width="100%" ng-click="showImages($index + 1)"/>
+			</div>
+			<div class="col col-25" ng-if="$index + 2 < images.length">
+				<img ng-src="http://localhost:3000/res/photos/{{images[$index + 2]}" width="100%"  ng-click="showImages($index + 2)"/>
+			</div>
+			<div class="col col-25" ng-if="$index + 3 < images.length">
+				<img ng-src="http://localhost:3000/res/photos/{{images[$index + 3]}}" width="100%"  ng-click="showImages($index +3)"/>
+			</div>
+		</div>
+
+		<ion-infinite-scroll on-infinite="getMoreImages()" ng-if="total >= pages*loadingUnit" immediate-check="false"></ion-infinite-scroll>
+	</ion-content>
+
 </ion-view>

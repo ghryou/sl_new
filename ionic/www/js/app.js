@@ -87,7 +87,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 				url: '/snapbox',
 				views: {
 					'menuContent': {
-						templateUrl: 'templates/snapbox.html'
+						templateUrl: 'templates/snapbox.html',
+						controller: 'SnapBoxCtrl'
 					}
 				}
 			})
