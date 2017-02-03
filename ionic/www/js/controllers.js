@@ -3,7 +3,7 @@ var root = 'http://localhost:3000'
 angular.module('starter.controllers', [])	
 
 	.factory('UserAuth', function ($window) {
-		var UserAuth= this
+		var UserAuth = this
 
 		UserAuth.removeToken = function () {
 			var res = $window.localStorage.token ? true : false
@@ -17,7 +17,7 @@ angular.module('starter.controllers', [])
 			return $window.localStorage.token;
 		}
 		UserAuth.isSessionActive = function () {
-			return $window.localStorage.token ? true : false;
+			return ($window.localStorage.token!='null') ? true : false;
 		}
 		UserAuth.setCurrentUser = function (user){
 			if(user) {
@@ -37,7 +37,7 @@ angular.module('starter.controllers', [])
 		return UserAuth
 	})
 
-	.service('UserSvc', function ($http) {
+	.service('UserSvc', function ($http, UserAuth) {
 		var svc = this
 		svc.getUser = function (){
 			return $http.get(root+'/api/user', {
@@ -50,6 +50,7 @@ angular.module('starter.controllers', [])
 			}).then(function (val){
 				if(val.data!=null){
 					svc.token = val.data
+					UserAuth.setToken(val.data)
 					$http.defaults.headers.common['X-Auth'] = val.data
 					return svc.getUser()
 				}else{
@@ -113,8 +114,10 @@ angular.module('starter.controllers', [])
 				onLike: function (item) {
 					$scope.count--;
 					console.log($scope.count);
-					
 					if(UserAuth.isSessionActive()){
+					    console.log("token "+UserAuth.getToken())
+					    console.log("username "+UserAuth.getCurrentUser())
+					    
 					    $http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like/'+$scope.photos[$scope.count].image_path)
 					        .success(function(res){ console.log(res); })
 					        .error(function(err){ console.log(err); });
@@ -245,7 +248,6 @@ angular.module('starter.controllers', [])
 	})
 	.controller('GalleryCtrl', function($scope, $http, $ionicModal, UserAuth){
 
-
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;
@@ -255,7 +257,7 @@ angular.module('starter.controllers', [])
 
 			alert ("please login!") 
 
-		}
+		}else{
 
 			$scope.user =  $scope.getCurrentUser();  
 
@@ -274,7 +276,7 @@ angular.module('starter.controllers', [])
 				console.log(err);
 
 			});
-		
+		}
 		// showImages- scroll
 		$scope.showImages = function(index) {
 			$scope.activeSlide = index;
@@ -338,7 +340,7 @@ angular.module('starter.controllers', [])
 
 
 
-	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth) {
+	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth, $window) {
       
 		$scope.loginNew = function(){
 			$scope.login_login = true
@@ -370,8 +372,8 @@ angular.module('starter.controllers', [])
 					UserSvc.login($scope.loginNew.username, $scope.loginNew.password).
 						then(function (res2){
 							$scope.$emit('login', res2.data)
-							UserAuth.setCurrentUser($scope.loginNew.username)
-							UserAuth.setToken(res2.data)
+							UserAuth.setCurrentUser(res2.data.username)
+							//UserAuth.setToken(res2.data)
 							$scope.loginNew.username = ''
 							$scope.loginNew.password = ''
 							$scope.loginNew.gender = ''
@@ -392,9 +394,9 @@ angular.module('starter.controllers', [])
 			UserSvc.login($scope.loginData.username, $scope.loginData.password).
 				then(function (res){
 					if(res){
-						$scope.$emit('login', res.data)
-						UserAuth.setCurrentUser($scope.loginData.username)
-						UserAuth.setToken(res.data)
+						//$scope.$emit('login', res.data)
+						//UserAuth.setToken(res.data)
+						UserAuth.setCurrentUser(res.data.username)
 						$scope.login_login = true
 						$scope.login_wrong = false
 						$scope.profile_show()
@@ -406,22 +408,21 @@ angular.module('starter.controllers', [])
 
 		$scope.profile_show = function(){
 			$scope.login_profile = true
+			console.log($window.localStorage.token)
 			if(UserAuth.isSessionActive()){
 				$scope.profile_username = UserAuth.getCurrentUser()
-			}else {$scope.profile_username = "Please Login Again"}
-
-			$http.get(root+'/api/user/'+$scope.profile_username).
-				then(function (res){
-					if(res.data) {
-						$scope.profile_gender = res.data.gender==0? "Female":"Male"
-						if(res.data.insta != null){
-							$scope.profile_insta = res.data.insta
-						}else{
-							$scope.profile_insta = "We Need Your Instagram Bro"
-						}
-					}
-					else {$scope.profile_username = "Please Login Again"}
-				})
+			    $http.get(root+'/api/user/'+$scope.profile_username).
+				    then(function (res){
+				    	if(res.data) {
+				    		$scope.profile_gender = res.data.gender==0? "Female":"Male"
+				    		if(res.data.insta != null){
+				    			$scope.profile_insta = res.data.insta
+				    		}else{
+				    			$scope.profile_insta = "We Need Your Instagram Bro"
+				    		}
+				    	} else {$scope.profile_username = "Please Login Again"}
+				    })
+			}else{$scope.profile_username = "Please Login Again"}
 		}
 
 		$scope.profile_logout = function(){
@@ -469,9 +470,9 @@ angular.module('starter.controllers', [])
 
 		}
 
-			$scope.user =  $scope.getCurrentUser();  
+		$scope.user =  $scope.getCurrentUser();  
 
-			$http.get(root+'/api/user/'+$scope.user).success(function(info){
+		$http.get(root+'/api/user/'+$scope.user).success(function(info){
 				
 				console.log($scope.user)
 				$scope.userInfo= info;
