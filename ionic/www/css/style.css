@@ -47,57 +47,122 @@ img {
 } 
 
 .full-size-width {
-  width: 100%;
+	width: 100%;
 }
 
 .vertical-center {
-  min-height: 80%;
-  min-height: 80vh;
+	min-height: 80%;
+	min-height: 80vh;
 
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 
 .image-list-thumb {
-    padding: 2px 2px 2px 2px;
-    height: 100px;
+	padding: 2px 2px 2px 2px;
+	height: 100px;
 }
- 
+
 .image-modal {
-    width: 100% !important;
-    height: 100%;
-    top: 0 !important;
-    left: 0 !important;
+	width: 100% !important;
+	height: 100%;
+	top: 0 !important;
+	left: 0 !important;
 }
- 
+
 .transparent {
-   /* background: transparent !important;*/
-	 background: rgba(0,0,0,0.7);
+	/* background: transparent !important;*/
+	background: rgba(0,0,0,0.7);
 }
- 
+
 .fullscreen-image {
-    max-width: 100%;
-    max-height: 100%;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    overflow: auto;
-    position: fixed;
-    right: 0;
-    top: 0;
+	max-width: 100%;
+	max-height: 100%;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	overflow: auto;
+	position: fixed;
+	right: 0;
+	top: 0;
 }
- 
+
 .slider {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .image {
-    width: 100%;
-    height: 600px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center, center;
+	width: 100%;
+	height: 600px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center, center;
+}
+.outer {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.inner {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.container {
+	/*  width: 70%;
+	height: 70%; */
+margin: auto;
+max-width:300px;
+max-height:100%;
 }
 
+			.mdl-button--fab.mdl-button--colored {
+				background-color: #000 !important;
+			}
+			.mdl-button--fab.mdl-button--colored:hover {
+				background-color: #333 !important;
+			}
+.title-image {
+    margin-top: 6px;
+    height: 24px;
+	margin-bottom: 8px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+.title-text {
+	font-weight: bold;
+	font-size: large;
+	vertical-align:middle;	
+}
+
+.snaplook-item{
+
+
+  border-color: #444444;
+  background-color: #444444;
+  color: rgb(236, 228, 179);
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: -1px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 14px;
+  font-family:"Arial",serif;
+
+}
+
+.snaplook-item-complex .snaplook-item-content {
+    position: relative;
+    z-index: 2;
+    padding: 16px 49px 16px 16px;
+    border: none;
+    background-color: #444444;
+}
+
+.item .item-content {
+  background-color: transparent !important;
+}

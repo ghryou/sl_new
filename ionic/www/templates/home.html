@@ -1,90 +1,55 @@
 <ion-view>
-<ion-nav-title>
-	<img src="img/logo-h.png" width="120px">
-</ion-nav-title>
-<ion-nav-bar class="bar-dark" align-title="center">
-	<ion-nav-buttons side="left">
-		<button class="button button-icon ion-navicon" menu-toggle="left">
-		</button>
-	</ion-nav-buttons>
-
+	<ion-nav-title>
+		<img src="img/logo-h.png" width="120px">
+	</ion-nav-title>
 
 	<ion-nav-buttons side="right">
 		<button class="button button-icon" ng-click="showOptions()">
 			<span class="icon ion-more"></span>
 		</button>
 	</ion-nav-buttons>
-</ion-nav-bar>
-	<!--ion-content-->
-	<body style="width: 100%; height: 100%;background-color:#eaeaea;">
+	<ion-content scroll="false" style="width: 100%; height: 100%; background-color:#FFFFF0">
 
-		<style>
-		.outer {
-			display: table;
-			width: 100%;
-			height: 100%;
-			}
-		.inner {
-			display: table-cell;
-			vertical-align: middle;
-			text-align: center;
-			}
-		.container {
-			/*  width: 70%;
-					height: 70%; */
-			margin: 10px auto;
-			max-width:300px;
-			}
-		</style>
-		<div class="container">
-			<div class="outer">
-				<div class="inner">
-					<div class="centered" id="tinderdiv">
-						<div id="tinderslide" style="margin-top:25px !important; margin-left:-60px !important; width:420px; height:630px;">
-							<ul id="lis">
-								<li class="pane1"><div class="img"></div><div><p>사진 로딩중</p></div><div class="like"></div><div class="dislike"></div></li>
-							</ul>
+			<div class="container">
+				<div class="outer">
+					<div class="inner">
+						<div class="centered" id="tinderdiv">
+							<div id="tinderslide" style="margin-top:0px !important; margin-left:-60px !important; width:420px; height:630px;">
+								<ul id="lis">
+									<li class="pane1"><div class="img"></div><div><p>사진 로딩중</p></div><div class="like"></div><div class="dislike"></div></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 
-		</div>
 
+			<link rel="stylesheet" type="text/css" href="css/index.css">
+			<link rel="stylesheet" href="css/material.lime-blue.min.css">
+			<link rel="stylesheet" href="css/icon2?family=Material+Icons">
 
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" href="css/material.lime-blue.min.css">
-    <link rel="stylesheet" href="css/icon2?family=Material+Icons">
-
-		<style>
-			.mdl-button--fab.mdl-button--colored {
-				background-color: #000 !important;
-			}
-			.mdl-button--fab.mdl-button--colored:hover {
-				background-color: #333 !important;
-			}
-		</style>
- 
-		<div id="temp" style="position:fixed;margin:0;padding:0;right:0;bottom:0;margin-right:16px;margin-bottom:16px;z-index:999;">
+			<div id="temp" style="position:fixed;margin:0;padding:0;right:0;bottom:0;margin-right:16px;margin-bottom:16px;z-index:999;">
 				<input type="hidden" id="uri" />
 				<div style="position:absolute;bottom:64px;right:8px;">
-				<button  id="btnAlbum" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
+					<button  id="btnAlbum" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">
 						<i class="material-icons">&#xE413;</i>
-				</button>
+					</button>
 				</div>
 				<button  id="btnPhoto" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-						<i class="material-icons">&#xE439;</i>
+					<i class="material-icons">&#xE439;</i>
 				</button>
 				<img id="myImage" style="width:200px;height:auto;display:none">
 				<!--img src="img/ic_camera_white_48dp_2x.png" width="48px" height="48px" style="background-color:blue;padding:24px;" -->
-		</div>
+			</div>
 
 
-		<!-- <ul swing-stack>
-			<li class="photos" swing-card ng-repeat="photo in photos">
-				<img ng-src={{photo.image}} />
-			</li>
-		</ul> -->
-	</body>	
+			<!-- <ul swing-stack>
+	   <li class="photos" swing-card ng-repeat="photo in photos">
+	   <img ng-src={{photo.image}} />
+	   </li>
+	   </ul> -->
+	</ion-content>
 </ion-view>
 

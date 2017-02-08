@@ -5704,8 +5704,8 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   padding: 16px;
   border-width: 1px;
   border-style: solid;
-  font-size: 16px; }
-  .item h2 {
+  font-size: 16px;
+  }.item h2 {
     margin: 0 0 2px 0;
     font-size: 16px;
     font-weight: normal; }
