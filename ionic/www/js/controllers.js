@@ -114,6 +114,7 @@ angular.module('starter.controllers', [])
             else { $scope.requestURL = root+'/api/photo/gender/0' }
             return 
         }
+        $scope.setURL()
         
 		getPhotos()
 		
@@ -267,7 +268,7 @@ angular.module('starter.controllers', [])
 
 */
 	})
-	.controller('GalleryCtrl', function($scope, $http, $ionicModal, UserAuth){
+	.controller('GalleryCtrl', function($scope, $http, $ionicModal, $ionicPopup, $state, UserAuth){
 
 		$scope.images = [];
 		$scope.pages=0;
@@ -276,8 +277,19 @@ angular.module('starter.controllers', [])
 		$scope.isSessionActive = UserAuth.isSessionActive;
 		if(!UserAuth.isSessionActive()){ 
 
-			alert ("please login!") 
-
+			//alert ("please login!") 
+			$ionicPopup.show({
+                template: '<div>',
+                title: '로그인이 필요합니다',
+                subTitle: 'Please login to use gallery',
+                scope: $scope,
+                buttons: [
+                    {text: '<b>로그인하러 가기</b>', type: 'button-positive', onTap: function(e) {
+                        $state.go('app.profile');
+                    }}
+                ]
+            });            
+            
 		}else{
 
 			$scope.user =  $scope.getCurrentUser();  
@@ -342,11 +354,11 @@ angular.module('starter.controllers', [])
 
 			$scope.loadingUnit = 8;
 
-			for( i =0 ; i < $scope.loadingUnit ; i++){
+			for(i = 0 ; i < $scope.loadingUnit ; i++){
 				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
 
 					$scope.images.push($scope.uploadedImages[$scope.loadingUnit * $scope.pages + i])
-				}; 
+				};
 				console.log("loaded images # is "+ $scope.images.length)
 			}
 
