@@ -489,23 +489,21 @@ angular.module('starter.controllers', [])
 	})
 
 
-	.controller('SnapBoxCtrl', function($scope, $http, $ionicModal, UserAuth){
+	.controller('SnapBoxCtrl', function($scope, $http, $ionicModal, $rootScope, UserAuth){
 
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;
 		$scope.getCurrentUser= UserAuth.getCurrentUser;
 		$scope.isSessionActive = UserAuth.isSessionActive;
-		if(!UserAuth.isSessionActive()){ 
+		
+		$scope.reset = function(){
+                    
+            $http.get(root+'/api/user/'+$scope.user).success(function(info){
+			    $scope.images = [];
+            	$scope.pages=0;
+		        $scope.total=0;
 
-			alert ("please login!") 
-
-		}
-
-		$scope.user =  $scope.getCurrentUser();  
-
-		$http.get(root+'/api/user/'+$scope.user).success(function(info){
-				
 				console.log($scope.user)
 				$scope.userInfo= info;
 				$scope.likedImages = $scope.userInfo.photo_like;
@@ -514,13 +512,34 @@ angular.module('starter.controllers', [])
 				$scope.getMoreImages();
 
 				console.log($scope.images, "liked image urls loaded completed");
-				console.log($scope.images[1]+$scope.images[3]);
+				//console.log($scope.images[1]+$scope.images[3]);
+				//$scope.$apply();
+				
 			}).error(function(err){
 
 				console.log(err);
 
 			});
+		}
 		
+		$scope.getMoreImages = function(){
+
+			$scope.loadingUnit = 8;
+
+			for( i =0 ; i < $scope.loadingUnit ; i++){
+				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
+
+					$scope.images.push($scope.likedImages[$scope.loadingUnit * $scope.pages + i])
+				}; 
+				console.log("loaded images # is "+ $scope.images.length)
+			}
+
+			$scope.pages++;
+
+			console.log("getMoreImages!"+"pages: "+$scope.pages)
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		}
+
 		// showImages- scroll
 		$scope.showImages = function(index) {
 			$scope.activeSlide = index;
@@ -534,7 +553,13 @@ angular.module('starter.controllers', [])
 		  $scope.showModal('templates/imageModal_zoom.html');
 		};*/
 
-
+        $scope.removeImages = function(img_path, index, isLast){
+            console.log("next img "+index);
+            $http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like_remove/'+img_path)
+		        .success(function(res){$scope.reset(); if(!isLast) {$scope.showImages(index);}})
+		        .error(function(err){ console.log(err); });
+        }
+        
 		$scope.showModal = function(templateUrl) {
 			$ionicModal.fromTemplateUrl(templateUrl, {
 				scope: $scope,
@@ -559,29 +584,30 @@ angular.module('starter.controllers', [])
 				$ionicSlideBoxDelegate.enableSlide(false);
 			}
 		};
+		
+		
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
+            //event.preventDefault(); 
+            // transitionTo() promise will be rejected with 
+            // a 'transition prevented' error
+            if(UserAuth.isSessionActive()){
+                $scope.user =  $scope.getCurrentUser();
+                $scope.reset();
+            }
+        })
+        
+        
+		if(!UserAuth.isSessionActive()){ 
 
+			alert ("please login!") 
 
-		$scope.getMoreImages = function(){
+		}else{
 
-			$scope.loadingUnit = 8;
-
-			for( i =0 ; i < $scope.loadingUnit ; i++){
-				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
-
-					$scope.images.push($scope.likedImages[$scope.loadingUnit * $scope.pages + i])
-				}; 
-				console.log("loaded images # is "+ $scope.images.length)
-			}
-
-			$scope.pages++;
-
-			console.log("getMoreImages!"+"pages: "+$scope.pages)
-			$scope.$broadcast('scroll.infiniteScrollComplete');
-		}
-
-
-
-
+		    $scope.user =  $scope.getCurrentUser();
+		
+		    $scope.reset();
+		
+        }
 
 	});
 
