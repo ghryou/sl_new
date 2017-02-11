@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 
 var _storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, 'public/res/photos')
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname + '-' + Date.now())
