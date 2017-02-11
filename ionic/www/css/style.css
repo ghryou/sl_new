@@ -197,14 +197,7 @@ max-width:300px;
   border-color: #444444;
   background-color: #444444;
   color: rgb(236, 228, 179);
-  position: relative;
-  z-index: 2;
-  display: block;
-  margin: -1px;
-  border-width: 1px;
-  border-style: solid;
   font-size: 14px;
-  font-family:"Arial",serif;
 
 }
 
@@ -218,6 +211,10 @@ max-width:300px;
 
 .item .item-content {
   background-color: transparent !important;
+}
+
+.input-label {
+ color: inherit;
 }
 
 .view-background {

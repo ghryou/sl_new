@@ -6,73 +6,73 @@
 	</ion-nav-title>
 
 
-	<ion-content>
+	<ion-content scroll="false" class="view-background">
 <div class="vertical-center">
-<div class="full-size-width">
+<div class="full-size-width view-background">
     <form ng-submit="doLogin()" ng-hide="login_login">
       <div class="list">
-        <label class="item item-input">
+        <label class="item item-input snaplook-item">
           <span class="input-label">Username</span>
           <input type="text" ng-model="loginData.username" placeholder="username">
         </label>
-        <label class="item item-input">
+        <label class="item item-input snaplook-item">
           <span class="input-label">Password</span>
           <input type="password" ng-model="loginData.password" placeholder="password">
         </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
+        <label class="item snaplook-item">
+          <button class="button button-block" style="font-size:16px; font-weight:bold;" type="submit">Log in</button>
         </label>
-	<span class="col-xs-12 col-md-12 label label-info button button-block" ng-click="loginNew()">앗?! 아직 회원이 아니라구요??</span>
+	<span class="col-xs-12 col-md-12 label label-info button button-block snaplook-item" style="font-size: 16px;" ng-click="loginNew()">앗?! 아직 회원이 아니라구요??</span>
 	<div ng-show="login_wrong" class="col-xs-12 col-md-12 alert alert-warning" style = "text-align: center" role="alert">아이디, 비밀번호를 확인해주세요</div>
       </div>
     </form>
 
     <form ng-submit="loginNew_submit()" ng-show="login_new">
       <div class="list">
-        <label class="item item-input">
+        <label class="item item-input snaplook-item">
           <span class="input-label">Username</span>
           <input type="text" ng-model="loginNew.username" placeholder="required" ng-required="true" ng-keyup="loginNewCheck_id()">
         </label>
         <div ng-show="login_new_id" class="col-xs-12 col-md-12 alert alert-warning" role="alert">중복 아이디 존재</div>
-        <label class="item item-input">
+        <label class="item item-input snaplook-item">
           <span class="input-label">Password</span>
           <input type="password" ng-model="loginNew.password" placeholder="required" ng-required="true">
         </label>
-        <label class="item item-input">
+        <label class="item item-input snaplook-item">
           <span class="input-label">Confirm PW</span>
           <input type="password" ng-model="loginNew.password_c" placeholder="required" ng-required="true" ng-keyup="loginNewCheck_pw()">
         </label>
         <div ng-show="login_new_pw" class="col-xs-12 col-md-12 alert alert-warning" role="alert">비밀번호가 일치하지 않습니다.</div>
-        <div class="item">
+        <div class="item snaplook-item">
           <span style="float:left width: 40%">Gender</span>
           <div style="float:right; width: 30%"><input type="radio" name="gender" ng-model="loginNew.gender" value="F">여자</div>
           <div style="float:right; width: 30%"><input type="radio" name="gender" ng-model="loginNew.gender" value="M">남자</div>
 	</div>
-        <label class="item item-input">
+        <label class="item item-input snaplook-item">
           <span class="input-label">Instagram ID</span>
           <input type="text" ng-model="loginNew.instaID" placeholder="optional" >
         </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit" ng-disabled="(!loginNew.username||!loginNew.password||!loginNew.password||!loginNew.gender||login_new_id||login_new_pw)">회원가입</button>
+        <label class="item snaplook-item">
+          <button class="button button-block" style="font-size:16px; font-weight:bold;" type="submit" ng-disabled="(!loginNew.username||!loginNew.password||!loginNew.password||!loginNew.gender||login_new_id||login_new_pw)">회원가입</button>
         </label>
-        <span class="col-xs-12 col-md-12 label label-info button button-block" ng-click="loginNew_back()">뒤로 가기</span>
+        <span class="col-xs-12 col-md-12 label label-info button button-block snaplook-item" style="font-size:16px; font-weight:bold;" ng-click="loginNew_back()">뒤로 가기</span>
       </div>
     </form>
 
     <div class="list" ng-show="login_profile">
-      <label class="item item-input">
+      <label class="item item-input snaplook-item">
 	    <span class="input-label">Username</span>
 	    <div><strong> {{profile_username}} </strong></div>
       </label>
-      <label class="item item-input">
+      <label class="item item-input snaplook-item">
 	    <span class="input-label">Gender</span>
 	    <div><strong> {{profile_gender}} </strong></div>
       </label>
-      <label class="item item-input">
+      <label class="item item-input snaplook-item">
         <span class="input-label">Instagram ID</span>
 	    <div><strong> {{profile_insta}} </strong></div>
       </label>
-      <span class="col-xs-12 col-md-12 label label-info button button-block" ng-click="profile_logout()">Log out</span>
+      <span class="col-xs-12 col-md-12 label label-info button button-block snaplook-item" ng-click="profile_logout()">Log out</span>
     </div>
 </div>
 </div>
