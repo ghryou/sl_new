@@ -307,14 +307,19 @@ angular.module('starter.controllers', [])
 
 	.controller('BestLookCtrl', function($scope, $http){
 
-
 		$scope.loadImage = function(){
 			$http.get(root+'/api/bestlook').success(function(images){
 				$scope.images=images;
 			}
-			)};
+			).error(function(err){
+				console.log(err);
+			});
+		};
 
 		$scope.loadImage();
+
+
+
 	})
 
 	.controller('GalleryCtrl', function($scope, $http, $ionicModal, $ionicPopup, $state, $rootScope, $ionicHistory, UserAuth){
