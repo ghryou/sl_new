@@ -1,35 +1,31 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.snaplook" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>SnapLook</name>
-    <description>
+  <name>SnapLook</name>
+  <description>
         Project SnapLook
     </description>
-    <author email="snaplook.me@gmail.com" href="http://snaplook.me/">
+  <author email="snaplook.me@gmail.com" href="http://snaplook.me/">
       SnapLook inc.
     </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <preference name="webviewbounce" value="false" />
-    <preference name="UIWebViewBounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="SplashScreenDelay" value="2000" />
-    <preference name="FadeSplashScreenDuration" value="2000" />
-    <preference name="android-minSdkVersion" value="16" />
-    <preference name="BackupWebStorage" value="none" />
-    <preference name="SplashScreen" value="screen"/>
-
-    <feature name="StatusBar">
-        <param name="ios-package" onload="true" value="CDVStatusBar" />
-    </feature>
-    
-    <plugin name="cordova-plugin-device" spec="~1.1.4" />
-    <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
-    <plugin name="cordova-plugin-file" spec="~4.3.1" />
-
-    <allow-intent href="cdvfile://*"/>
-    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
-    <preference name="iosPersistentFileLocation" value="Library"/>
-
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="SplashScreenDelay" value="2000"/>
+  <preference name="FadeSplashScreenDuration" value="2000"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <preference name="SplashScreen" value="screen"/>
+  <preference name="AndroidPersistentFileLocation" value="Compatibility"/>
+  <preference name="iosPersistentFileLocation" value="Library"/>
+  <feature name="StatusBar">
+    <param name="ios-package" onload="true" value="CDVStatusBar"/>
+  </feature>
+  <plugin name="cordova-plugin-device" spec="~1.1.4"/>
+  <plugin name="cordova-plugin-file-transfer" spec="~1.6.1"/>
+  <plugin name="cordova-plugin-file" spec="~4.3.1"/>
+  <allow-intent href="cdvfile://*"/>
   <platform name="ios">
     <icon src="resources/ios/icon/icon.png" width="57" height="57"/>
     <icon src="resources/ios/icon/icon@2x.png" width="114" height="114"/>
@@ -82,5 +78,5 @@
     <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
     <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
+  <allow-navigation href="http://192.168.43.30:8100"/>
 </widget>
-
