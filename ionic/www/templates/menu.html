@@ -1,3 +1,4 @@
+<script src="//rawgit.com/beaver71/ionic-ion-drawer/master/ionic.contrib.drawer.js"></script>
 <ion-side-menus enable-menu-with-back-views="false">
 	<ion-side-menu-content drag-content="false">
 		<ion-nav-bar class="bar-dark" align-title="center">
@@ -9,7 +10,7 @@
 		</ion-nav-bar>
 		<ion-nav-view name="menuContent"></ion-nav-view>
 	</ion-side-menu-content>
-
+	<drawer side="left">
 
 	<ion-side-menu>
 		<ion-header-bar class="bar-dark" align-title="center">
@@ -30,6 +31,7 @@
 					<ion-item class="item-icon-left snaplook-item " menu-close ui-sref="app.gallery"> 
 						<span class="icon ion-images" style="font-size: 28px"></span> My Photo Gallery
 					</ion-item>
+					
 					<ion-item class="item-icon-left snaplook-item " menu-close ui-sref="app.snapbox">
 						<span class="icon ion-star" style="font-size: 28px"></span> SNAP BOX
 					</ion-item>
@@ -39,4 +41,6 @@
 					</ion-item>
 		</ion-content>
 	</ion-side-menu>
+
+	</drawer>
 </ion-side-menus>

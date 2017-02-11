@@ -239,77 +239,36 @@ angular.module('starter.controllers', [])
 			$scope.images=images;
 		});
 
-		/*	var ithBestLook = function(i){
-=======
-			$scope.images= images;
-
-		});
 	})
-
-
-		/*	var ithBestLook = function(i){
->>>>>>> stash
-			$http.get($scope.images[i].image_path)
-				.success(function(image) {
-					console.log('Test');
-					console.log('i is ', i);
-					console.log($scope.images[i].image_path);
-					$scope.bestLooks.push(image);
-				}).error(function(data){console.log("The request isn't working");}); }
-
-
-		var getBestLook = function(){	
-			for(var i=0; i<$scope.images.length; i++){
-				ithBestLook(i);
-			}
-		}
-
-		getBestLook();
-
-*/
-	})
-	.controller('GalleryCtrl', function($scope, $http, $ionicModal, $ionicPopup, $state, UserAuth){
+	
+	.controller('GalleryCtrl', function($scope, $http, $ionicModal, $ionicPopup, $state, $rootScope, $ionicHistory, UserAuth){
 
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;
 		$scope.getCurrentUser= UserAuth.getCurrentUser;
 		$scope.isSessionActive = UserAuth.isSessionActive;
-		if(!UserAuth.isSessionActive()){ 
-
-			//alert ("please login!") 
-			$ionicPopup.show({
-                template: '<div>',
-                title: '로그인이 필요합니다',
-                subTitle: 'Please login to use gallery',
-                scope: $scope,
-                buttons: [
-                    {text: '<b>로그인하러 가기</b>', type: 'button-positive', onTap: function(e) {
-                        $state.go('app.profile');
-                    }}
-                ]
-            });            
-            
-		}else{
-
-			$scope.user =  $scope.getCurrentUser();  
-
-			$http.get(root+'/api/user/'+$scope.user).success(function(info){
-				
-				console.log($scope.user)
+		
+		$scope.resetImg = function(){
+                    
+            $http.get(root+'/api/user/'+$scope.user).success(function(info){
+				$scope.images = [];
+	        	$scope.pages=0;
+	        	$scope.total=0;
+	        	
+				//console.log($scope.user)
 				$scope.userInfo= info;
 				$scope.uploadedImages = $scope.userInfo.photo_upload;
 				$scope.total = $scope.uploadedImages.length;
 				
 				$scope.getMoreImages();
 
-				console.log($scope.images,$scope.total+": uploaded image urls loaded completed");
+				//console.log($scope.images,$scope.total+": uploaded image urls loaded completed");
 			}).error(function(err){
-
 				console.log(err);
-
 			});
 		}
+		
 		// showImages- scroll
 		$scope.showImages = function(index) {
 			$scope.activeSlide = index;
@@ -368,6 +327,33 @@ angular.module('starter.controllers', [])
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 		}
 
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
+            if(toState.name == "app.gallery"){
+                $scope.initialize()
+            }
+        })
+        
+        $scope.initialize = function(){
+            if(!UserAuth.isSessionActive()){
+    			$ionicPopup.show({
+                    template: '<div>',
+                    title: '로그인이 필요합니다',
+                    subTitle: 'Please login to use gallery',
+                    scope: $scope,
+                    buttons: [
+                        {text: '<b>로그인하러 가기</b>', type: 'button-positive', onTap: function(e) {
+                            $ionicHistory.nextViewOptions({disableBack: true});
+                            $state.go('app.profile');
+                        }}
+                    ]
+                });
+            }else{
+                $scope.user =  $scope.getCurrentUser();
+                $scope.resetImg();
+            }
+        }
+        
+        $scope.initialize()
 
 	})
 
@@ -489,38 +475,57 @@ angular.module('starter.controllers', [])
 	})
 
 
-	.controller('SnapBoxCtrl', function($scope, $http, $ionicModal, UserAuth){
+	.controller('SnapBoxCtrl', function($scope, $http, $ionicModal, $rootScope, $ionicHistory, $ionicPopup, $state, UserAuth){
 
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;
 		$scope.getCurrentUser= UserAuth.getCurrentUser;
 		$scope.isSessionActive = UserAuth.isSessionActive;
-		if(!UserAuth.isSessionActive()){ 
+		
+		$scope.resetImg = function(){
+                    
+            $http.get(root+'/api/user/'+$scope.user).success(function(info){
+			    $scope.images = [];
+            	$scope.pages=0;
+		        $scope.total=0;
 
-			alert ("please login!") 
-
-		}
-
-		$scope.user =  $scope.getCurrentUser();  
-
-		$http.get(root+'/api/user/'+$scope.user).success(function(info){
-				
-				console.log($scope.user)
+				//console.log($scope.user)
 				$scope.userInfo= info;
 				$scope.likedImages = $scope.userInfo.photo_like;
 				$scope.total = $scope.likedImages.length;
 				
 				$scope.getMoreImages();
 
-				console.log($scope.images, "liked image urls loaded completed");
-				console.log($scope.images[1]+$scope.images[3]);
+				//console.log($scope.images, "liked image urls loaded completed");
+				//console.log($scope.images[1]+$scope.images[3]);
+				//$scope.$apply();
+				
 			}).error(function(err){
 
 				console.log(err);
 
 			});
+		}
 		
+		$scope.getMoreImages = function(){
+
+			$scope.loadingUnit = 8;
+
+			for( i =0 ; i < $scope.loadingUnit ; i++){
+				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
+
+					$scope.images.push($scope.likedImages[$scope.loadingUnit * $scope.pages + i])
+				}; 
+				console.log("loaded images # is "+ $scope.images.length)
+			}
+
+			$scope.pages++;
+
+			console.log("getMoreImages!"+"pages: "+$scope.pages)
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		}
+
 		// showImages- scroll
 		$scope.showImages = function(index) {
 			$scope.activeSlide = index;
@@ -534,7 +539,13 @@ angular.module('starter.controllers', [])
 		  $scope.showModal('templates/imageModal_zoom.html');
 		};*/
 
-
+        $scope.removeImages = function(img_path, index, isLast){
+            console.log("next img "+index);
+            $http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like_remove/'+img_path)
+		        .success(function(res){$scope.resetImg(); if(!isLast) {$scope.showImages(index);}})
+		        .error(function(err){ console.log(err); });
+        }
+        
 		$scope.showModal = function(templateUrl) {
 			$ionicModal.fromTemplateUrl(templateUrl, {
 				scope: $scope,
@@ -559,29 +570,38 @@ angular.module('starter.controllers', [])
 				$ionicSlideBoxDelegate.enableSlide(false);
 			}
 		};
-
-
-		$scope.getMoreImages = function(){
-
-			$scope.loadingUnit = 8;
-
-			for( i =0 ; i < $scope.loadingUnit ; i++){
-				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
-
-					$scope.images.push($scope.likedImages[$scope.loadingUnit * $scope.pages + i])
-				}; 
-				console.log("loaded images # is "+ $scope.images.length)
-			}
-
-			$scope.pages++;
-
-			console.log("getMoreImages!"+"pages: "+$scope.pages)
-			$scope.$broadcast('scroll.infiniteScrollComplete');
-		}
-
-
-
-
+		
+		
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
+            //event.preventDefault(); 
+            // transitionTo() promise will be rejected with 
+            // a 'transition prevented' error
+            if(toState.name == "app.snapbox"){
+                $scope.initialize()
+            }
+        })
+        
+        $scope.initialize = function(){
+            if(!UserAuth.isSessionActive()){
+                $ionicPopup.show({
+                    template: '<div>',
+                    title: '로그인이 필요합니다',
+                    subTitle: 'Please login to use gallery',
+                    scope: $scope,
+                    buttons: [
+                        {text: '<b>로그인하러 가기</b>', type: 'button-positive', onTap: function(e) {
+                            $ionicHistory.nextViewOptions({disableBack: true});
+                            $state.go('app.profile');
+                        }}
+                    ]
+                });
+            }else{
+                $scope.user =  $scope.getCurrentUser();
+                $scope.resetImg();
+            }
+        }
+        
+        $scope.initialize()
 
 	});
 
