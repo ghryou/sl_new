@@ -107,7 +107,7 @@ angular.module('starter.controllers', [])
 
 	})
 
-	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth, $cordovaCamera) {
+	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth, navigator.camera) {
 
 		$scope.sex = { value : UserAuth.getOptions().gender }
 		$scope.root = root;
@@ -227,17 +227,17 @@ angular.module('starter.controllers', [])
 		var takePicture = function(serverURL){
 			var options = {
 				quality          : 75,
-				destinationType  : $cordovaCamera.DestinationType.DATA_URL,
-				sourceType       : $cordovaCamera.PictureSourceType.CAMERA,
+				destinationType  : navigator.camera.DestinationType.DATA_URL,
+				sourceType       : navigator.camera.PictureSourceType.CAMERA,
 				allowEdit        : true,
-				encodingType     : $cordovaCamera.EncodingType.JPEG,
+				encodingType     : navigator.camera.EncodingType.JPEG,
 				targetWidth      : 300,
 				targetHeight     : 300,
 				popoverOptions   : CameraPopoverOptions,
 				saveToPhotoAlbum : false
 			};
 
-			$cordovaCamera.getPicture(function(imageURI) {
+			navigator.camera.getPicture(function(imageURI) {
 
 				upload(serverURL, imageURI);
 
@@ -251,10 +251,10 @@ angular.module('starter.controllers', [])
 		var uploadPhoto = function(serverURL){
 			var options = {
 				quality          : 75,
-				destinationType  : $cordovaCamera.DestinationType.DATA_URL,
-				sourceType       : $cordovaCamera.PictureSourceType.PHOTOLIBRARY,
+				destinationType  : navigator.camera.DestinationType.DATA_URL,
+				sourceType       : navigator.camera.PictureSourceType.PHOTOLIBRARY,
 				allowEdit        : true,
-				encodingType     : $cordovaCamera.EncodingType.JPEG,
+				encodingType     : navigator.camera.EncodingType.JPEG,
 				targetWidth      : 300,
 				targetHeight     : 300,
 				popoverOptions   : CameraPopoverOptions,
@@ -262,7 +262,7 @@ angular.module('starter.controllers', [])
 			};
 
 
-			$cordovaCamera.getPicture(function(imageURI) {
+			navigator.camera.getPicture(function(imageURI) {
 
 				upload(serverURL, imageURI);
 
