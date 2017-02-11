@@ -107,7 +107,7 @@ angular.module('starter.controllers', [])
 
 	})
 
-	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth, navigator.camera) {
+	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth, $cordovaCamera) {
 
 		$scope.sex = { value : UserAuth.getOptions().gender }
 		$scope.root = root;
