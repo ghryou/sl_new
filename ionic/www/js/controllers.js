@@ -165,7 +165,7 @@ angular.module('starter.controllers', [])
 		function getPhotos() {
 		
 			$("#tinderslide").remove();
-			$("#tinderdiv").append('<div id="tinderslide" style="margin-top:25px !important;margin-left:-60px !important; width:420px; height:630px;"><ul id="lis"><div class="mdl-spinner mdl-js-spinner is-active"></div><br><br><button class="mdl-button mdl-js-button mdl-js-ripple-effect">재요청</button></ul></div>');
+			$("#tinderdiv").append('<div id="tinderslide" style="margin-top:-2% !important;margin-left:-10% !important; width:120%; height:605px;"><ul id="lis"><div class="mdl-spinner mdl-js-spinner is-active"></div><br><br><button class="mdl-button mdl-js-button mdl-js-ripple-effect">재요청</button></ul></div>');
 			componentHandler.upgradeDom(); // CSS 적용
 
 

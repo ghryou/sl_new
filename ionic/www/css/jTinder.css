@@ -18,9 +18,10 @@ body {
 #tinderslide {
     position: relative;
     background: #fff;
-    width: 95%;
+    width: 120%;
     height: 100%;
-	margin-top:10px;
+	margin-top:5% !important;
+	margin-left:-10% !important;
 }
 
 #tinderslide ul {

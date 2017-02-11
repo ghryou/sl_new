@@ -71,6 +71,26 @@ img {
 	left: 0 !important;
 }
 
+.option-modal{
+	width: 90% !important;
+	max-height: 25%;
+	top: 34% !important;
+	bottom: 36% !important;
+	min-height: 25%;
+	opacity: 0.9;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.option-modal-menu{
+
+	background-color:#444444;
+	border-color:#444444;
+	color:rgb(236, 228, 179);
+
+
+}
+
 .transparent {
 	/* background: transparent !important;*/
 	background: rgba(0,0,0,0.7);
@@ -113,9 +133,8 @@ img {
 .container {
 	/*  width: 70%;
 	height: 70%; */
-margin: auto;
+margin: 10px auto;
 max-width:300px;
-max-height:100%;
 }
 
 			.mdl-button--fab.mdl-button--colored {
@@ -165,4 +184,8 @@ max-height:100%;
 
 .item .item-content {
   background-color: transparent !important;
+}
+
+.view-background {
+	background-color: #444444;
 }
