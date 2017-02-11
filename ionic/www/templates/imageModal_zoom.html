@@ -7,7 +7,7 @@
 			<ion-scroll direction="xy" scrollbar-x="false" scrollbar-y="false"
 												  zooming="true" min-zoom="{{zoomMin}}" style="width: 100%; height: 100%"
 													delegate-handle="scrollHandle{{$index}}" on-scroll="updateSlideStatus(activeSlide)" on-release="updateSlideStatus(activeSlide)">
-				<div class="image" style="background-image: url(http://localhost:3000/res/photos/{{image.image_path}})"></div>
+				<div class="image" style="background-image: url({{root}}/res/photos/{{image.image_path}})"></div>
 
 			</ion-scroll>
 		</ion-slide>

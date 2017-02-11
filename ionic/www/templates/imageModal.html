@@ -2,7 +2,7 @@
 <div class="modal image-modal transparent" ng-click="closeModal()">
 	<ion-slide-box on-slide-changed="slideChanged(index)" show-pager="true" active-slide="activeSlide">
 		<ion-slide ng-repeat="image in images">
-			<img ng-src="http://localhost:3000/res/photos/{{image}}" class="fullscreen-image-popup"/>
+			<img ng-src="{{root}}/res/photos/{{image}}" class="fullscreen-image-popup"/>
 		    <button class="gallery-delete-button" ng-click="removeImages(image, $index, $last)">DELETE</button>
 		</ion-slide>
 	</ion-slide-box>

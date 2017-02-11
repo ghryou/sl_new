@@ -1,4 +1,5 @@
-var root = 'http://localhost:3000'
+//var root = 'http://localhost:3000'
+var root = 'http://52.79.194.142'
 
 angular.module('starter.controllers', [])	
 
@@ -80,7 +81,7 @@ angular.module('starter.controllers', [])
 		// listen for the $ionicView.enter event:
 		//$scope.$on('$ionicView.enter', function(e) {
 		//});
-
+		$scope.root = root;
 		// Form data for the login modal
 		$scope.loginData = {};
 
@@ -106,6 +107,7 @@ angular.module('starter.controllers', [])
 	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth) {
 	
         $scope.sex = { value : UserAuth.getOptions().gender }
+        $scope.root = root;
         $scope.requestURL = root+'/api/photo'
         
         $scope.setURL = function (){
@@ -177,7 +179,7 @@ angular.module('starter.controllers', [])
 
 				$.each($scope.photos, function (index, value) {
 
-					html_slide += '<li class="pane3 id="' + value.username + '"><div class="img" pid="' + value.username + '" style="background: url(\''+ 'http://localhost:3000/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
+					html_slide += '<li class="pane3 id="' + value.username + '"><div class="img" pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
 
 					html_slide += "<div style='height:22px;'></div>";
 
@@ -234,7 +236,7 @@ angular.module('starter.controllers', [])
 	})
 
 	.controller('BestLookCtrl', function($scope, $http){
-
+		$scope.root = root;
 		$http.get(root+'/api/bestlook').success(function(images){
 			$scope.images=images;
 		});
@@ -242,7 +244,7 @@ angular.module('starter.controllers', [])
 	})
 	
 	.controller('GalleryCtrl', function($scope, $http, $ionicModal, $ionicPopup, $state, $rootScope, $ionicHistory, UserAuth){
-
+		$scope.root = root;
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;
@@ -360,7 +362,7 @@ angular.module('starter.controllers', [])
 
 
 	.controller('ProfileCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth, $window) {
-      
+      	$scope.root = root;
 		$scope.loginNew = function(){
 			$scope.login_login = true
 			$scope.login_new = true
@@ -459,6 +461,7 @@ angular.module('starter.controllers', [])
 	})
 
 	.controller('InquiryCtrl', function($scope, $http, $timeout, UserAuth){
+		$scope.root = root;
 		$scope.comment_sended = false
 		$scope.sendInquiry = function(){
 			$http.post(root+'/api/inquiry/',{
@@ -476,7 +479,7 @@ angular.module('starter.controllers', [])
 
 
 	.controller('SnapBoxCtrl', function($scope, $http, $ionicModal, $rootScope, $ionicHistory, $ionicPopup, $state, UserAuth){
-
+		$scope.root = root;
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;

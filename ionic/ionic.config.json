@@ -4,7 +4,7 @@
   "proxies":[
 	  {
 	  	"path":"/api/bestlook",
-	  	"proxyUrl": "http://localhost:3000/api/bestlook"
+	  	"proxyUrl": "http://52.79.194.142/api/bestlook"
 	  
 	  }
   

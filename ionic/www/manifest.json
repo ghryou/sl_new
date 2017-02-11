@@ -1,7 +1,7 @@
 
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
+  "name": "Snaplook",
+  "short_name": "Snaplook",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
