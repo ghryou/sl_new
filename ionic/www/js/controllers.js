@@ -210,7 +210,7 @@ angular.module('starter.controllers', [])
 			uploadOptions.chunkedMode = false;
 
 
-			$cordovaFile.uploadFile(serverURL, fileURL, uploadOptions).then(
+			$cordovaFileTransfer.upload(serverURL, fileURL, uploadOptions).then(
 
 				function(result){
 
@@ -239,7 +239,7 @@ angular.module('starter.controllers', [])
 
 			navigator.camera.getPicture(function(imageURI) {
 
-				upload(serverURL, imageURI);
+				upload(root+"/upload", imageURI);
 
 			},function(err){
 
@@ -264,7 +264,7 @@ angular.module('starter.controllers', [])
 
 			navigator.camera.getPicture(function(imageURI) {
 
-				upload(serverURL, imageURI);
+				upload(root+"/upload", imageURI);
 
 			},function(err){
 
