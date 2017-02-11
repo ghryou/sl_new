@@ -126,6 +126,11 @@ app.post('/topic', function(req, res){
 	res.redirect('/topic/'+title);
     });
 });
-app.listen(3000, function(){
-    console.log('Connected, 3000 port!');
+
+module.exports = app;
+
+app.listen(9000, function(){
+    console.log('Connected, 9000 port!');
 });
+
+module.exports = app;
