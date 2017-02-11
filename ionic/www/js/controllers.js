@@ -107,7 +107,7 @@ angular.module('starter.controllers', [])
 
 	})
 
-	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth) {
+	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFile, UserAuth, $cordovaCamera) {
 
 		$scope.sex = { value : UserAuth.getOptions().gender }
 		$scope.root = root;
@@ -227,10 +227,10 @@ angular.module('starter.controllers', [])
 		var takePicture = function(serverURL){
 			var options = {
 				quality          : 75,
-				destinationType  : Camera.DestinationType.DATA_URL,
-				sourceType       : Camera.PictureSourceType.CAMERA,
+				destinationType  : $cordovaCamera.DestinationType.DATA_URL,
+				sourceType       : $cordovaCamera.PictureSourceType.CAMERA,
 				allowEdit        : true,
-				encodingType     : Camera.EncodingType.JPEG,
+				encodingType     : $cordovaCamera.EncodingType.JPEG,
 				targetWidth      : 300,
 				targetHeight     : 300,
 				popoverOptions   : CameraPopoverOptions,
@@ -251,10 +251,10 @@ angular.module('starter.controllers', [])
 		var uploadPhoto = function(serverURL){
 			var options = {
 				quality          : 75,
-				destinationType  : Camera.DestinationType.DATA_URL,
-				sourceType       : Camera.PictureSourceType.PHOTOLIBRARY,
+				destinationType  : $cordovaCamera.DestinationType.DATA_URL,
+				sourceType       : $cordovaCamera.PictureSourceType.PHOTOLIBRARY,
 				allowEdit        : true,
-				encodingType     : Camera.EncodingType.JPEG,
+				encodingType     : $cordovaCamera.EncodingType.JPEG,
 				targetWidth      : 300,
 				targetHeight     : 300,
 				popoverOptions   : CameraPopoverOptions,
