@@ -376,10 +376,10 @@ angular.module('starter.controllers', [])
 			});
 		}
 
-		$scope.removeimages = function(img_path, index, islast){
+		$scope.removeImages = function(img_path, index, islast){
 			console.log("next img "+index);
-			$http.put(root+'/api/user/'+userauth.getcurrentuser()+'/upload_remove/'+img_path)
-				.success(function(res){$scope.resetimg(); if(!islast) {$scope.showimages(index);}})
+			$http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/upload_remove/'+img_path)
+				.success(function(res){$scope.resetImg(); if(!islast) {$scope.showImages(index);}})
 				.error(function(err){ console.log(err); });
 		}
 
@@ -632,10 +632,10 @@ angular.module('starter.controllers', [])
 		  $scope.showModal('templates/imageModal_zoom.html');
 		};*/
 
-		$scope.removeimages = function(img_path, index, islast){
+		$scope.removeImages = function(img_path, index, islast){
 			console.log("next img "+index);
 			$http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like_remove/'+img_path)
-				.success(function(res){$scope.resetimg(); if(!islast) {$scope.showimages(index);}})
+				.success(function(res){$scope.resetImg(); if(!islast) {$scope.showImages(index);}})
 				.error(function(err){ console.log(err); });
 		}
 
