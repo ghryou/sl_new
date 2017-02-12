@@ -514,9 +514,9 @@ angular.module('starter.controllers', [])
 							}else{
 								$scope.profile_insta = "We Need Your Instagram Bro"
 							}
-						} else {$scope.profile_username = "Please Login Again"}
+						} else {$scope.profile_logout();}
 					})
-			}else{$scope.profile_username = "Please Login Again"}
+			}else{$scope.profile_logout();}
 		}
 
 		$scope.profile_logout = function(){
