@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.snaplook" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>SnapLook</name>
-  <description>
+    <name>SnapLook</name>
+    <description>
         Project SnapLook
     </description>
-  <author email="snaplook.me@gmail.com" href="http://snaplook.me/">
+    <author email="snaplook.me@gmail.com" href="http://snaplook.me/">
       SnapLook inc.
     </author>
   <content src="index.html"/>
