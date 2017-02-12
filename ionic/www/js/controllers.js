@@ -233,8 +233,8 @@ angular.module('starter.controllers', [])
 				sourceType       : navigator.camera.PictureSourceType.CAMERA,
 				allowEdit        : true,
 				encodingType     : navigator.camera.EncodingType.JPEG,
-				targetWidth      : 300,
-				targetHeight     : 300,
+				targetWidth      : 720,
+				targetHeight     : 480,
 				popoverOptions   : CameraPopoverOptions,
 				saveToPhotoAlbum : false
 			};
