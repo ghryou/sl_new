@@ -364,13 +364,7 @@ angular.module('starter.controllers', [])
 			$scope.showModal('templates/imageModal.html');
 		}
 
-		/*
-		$scope.zoomMin = 1;
-		$scope.showImages = function(index) {
-		  $scope.activeSlide = index;
-		  $scope.showModal('templates/imageModal_zoom.html');
-		};*/
-
+		
 
 		$scope.showModal = function(templateUrl) {
 			$ionicModal.fromTemplateUrl(templateUrl, {
@@ -381,6 +375,14 @@ angular.module('starter.controllers', [])
 				$scope.modal.show();
 			});
 		}
+
+		$scope.removeimages = function(img_path, index, islast){
+			console.log("next img "+index);
+			$http.put(root+'/api/user/'+userauth.getcurrentuser()+'/upload_remove/'+img_path)
+				.success(function(res){$scope.resetimg(); if(!islast) {$scope.showimages(index);}})
+				.error(function(err){ console.log(err); });
+		}
+
 
 		// Close the modal
 		$scope.closeModal = function() {
@@ -630,10 +632,10 @@ angular.module('starter.controllers', [])
 		  $scope.showModal('templates/imageModal_zoom.html');
 		};*/
 
-		$scope.removeImages = function(img_path, index, isLast){
+		$scope.removeimages = function(img_path, index, islast){
 			console.log("next img "+index);
 			$http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/like_remove/'+img_path)
-				.success(function(res){$scope.resetImg(); if(!isLast) {$scope.showImages(index);}})
+				.success(function(res){$scope.resetimg(); if(!islast) {$scope.showimages(index);}})
 				.error(function(err){ console.log(err); });
 		}
 
