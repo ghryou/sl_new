@@ -202,18 +202,19 @@ angular.module('starter.controllers', [])
 		/*from here, functions for uploading camera & gallery Images*/
 
 		var upload = function(serverURL, fileURL){
-
+		
 			var uploadOptions = new FileUploadOptions();
 			uploadOptions.fileKey = "user_photo";
 			uploadOptions.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
 			uploadOptions.mimeType = "image/jpeg";
 			uploadOptions.chunkedMode = false;
+			uploadOptions.params = { fileURL : JSON.stringify(fileURL)};
+		
+			console.log(JSON.stringify(fileURL))
 
-
-			$cordovaFileTransfer.upload(serverURL, fileURL, uploadOptions).then(
-
+			$cordovaFileTransfer.upload(encodeURI(serverURL), fileURL, uploadOptions).then(
 				function(result){
-					
+					console.log("Hi you ar in result")	
 					console.log("SUCCESS: " + JSON.stringify(result.response));
 
 				},function(error){
@@ -228,7 +229,7 @@ angular.module('starter.controllers', [])
 		var takePicture = function(serverURL){
 			var options = {
 				quality          : 75,
-				destinationType  : navigator.camera.DestinationType.DATA_URL,
+				destinationType  : navigator.camera.DestinationType.FILE_URI,
 				sourceType       : navigator.camera.PictureSourceType.CAMERA,
 				allowEdit        : true,
 				encodingType     : navigator.camera.EncodingType.JPEG,
@@ -241,6 +242,8 @@ angular.module('starter.controllers', [])
 			navigator.camera.getPicture(function(imageURI) {
 
 				upload(root+"/api/photo/"+UserAuth.getCurrentUser(), imageURI);
+				
+				console.log(root+"/api/photo/"+UserAuth.getCurrentUser())
 
 			},function(err){
 
@@ -252,7 +255,7 @@ angular.module('starter.controllers', [])
 		var uploadPhoto = function(serverURL){
 			var options = {
 				quality          : 75,
-				destinationType  : navigator.camera.DestinationType.DATA_URL,
+				destinationType  : navigator.camera.DestinationType.FILE_URI,
 				sourceType       : navigator.camera.PictureSourceType.PHOTOLIBRARY,
 				allowEdit        : true,
 				encodingType     : navigator.camera.EncodingType.JPEG,
@@ -263,10 +266,14 @@ angular.module('starter.controllers', [])
 			};
 
 
+
 			navigator.camera.getPicture(function(imageURI) {
+
+				console.log('Hi You ar in Getpicture function')	
 
 				upload(root+"/api/photo/"+UserAuth.getCurrentUser(), imageURI);
 
+				console.log(root+"/api/photo/"+UserAuth.getCurrentUser())
 			},function(err){
 
 			}, options);
