@@ -204,7 +204,7 @@ angular.module('starter.controllers', [])
 		var upload = function(serverURL, fileURL){
 
 			var uploadOptions = new FileUploadOptions();
-			uploadOptions.fileKey = "file";
+			uploadOptions.fileKey = "user_photo";
 			uploadOptions.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
 			uploadOptions.mimeType = "image/jpeg";
 			uploadOptions.chunkedMode = false;
@@ -213,13 +213,14 @@ angular.module('starter.controllers', [])
 			$cordovaFileTransfer.upload(serverURL, fileURL, uploadOptions).then(
 
 				function(result){
-
+					
 					console.log("SUCCESS: " + JSON.stringify(result.response));
 
 				},function(error){
 					console.log(error);
 
 				})
+
 		};
 
 
@@ -239,7 +240,7 @@ angular.module('starter.controllers', [])
 
 			navigator.camera.getPicture(function(imageURI) {
 
-				upload(root+"/upload", imageURI);
+				upload(root+"/api/photo/"+UserAuth.getCurrentUser(), imageURI);
 
 			},function(err){
 
@@ -264,7 +265,7 @@ angular.module('starter.controllers', [])
 
 			navigator.camera.getPicture(function(imageURI) {
 
-				upload(root+"/upload", imageURI);
+				upload(root+"/api/photo/"+UserAuth.getCurrentUser(), imageURI);
 
 			},function(err){
 
@@ -391,8 +392,8 @@ angular.module('starter.controllers', [])
 
 
 		$scope.getMoreImages = function(){
-
-			$scope.loadingUnit = 8;
+	
+			$scope.loadingUnit = $scope.pages ? 8 : 20 ; 
 
 			for(i = 0 ; i < $scope.loadingUnit ; i++){
 				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
@@ -591,8 +592,9 @@ angular.module('starter.controllers', [])
 		}
 
 		$scope.getMoreImages = function(){
+	
+			$scope.loadingUnit = $scope.pages ? 8 : 20 ; 
 
-			$scope.loadingUnit = 8;
 
 			for( i =0 ; i < $scope.loadingUnit ; i++){
 				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
