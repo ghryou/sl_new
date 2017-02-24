@@ -84,22 +84,27 @@
 
 			switch (ev.type) {
 				case 'touchstart':
+					console.log('debug: touchstart')
 					if(touchStart === false) {
 						touchStart = true;
 						xStart = ev.originalEvent.touches[0].pageX;
 						yStart = ev.originalEvent.touches[0].pageY;
 					}
 				case 'mousedown':
+					console.log('debug: mousedown')
 					if(touchStart === false) {
 						touchStart = true;
 						xStart = ev.pageX;
 						yStart = ev.pageY;
 					}
-				case 'mousemove':
-				case 'touchmove':
+				case 'mousemove': console.log('debug: mousemove')
+				case 'touchmove': console.log('debug: touchmove')
 					if(touchStart === true) {
-						var pageX = typeof ev.pageX == 'undefined' ? ev.originalEvent.touches[0].pageX : ev.pageX;
-						var pageY = typeof ev.pageY == 'undefined' ? ev.originalEvent.touches[0].pageY : ev.pageY;
+												
+						var pageX = ev.originalEvent.touches ? ev.originalEvent.touches[0].pageX : ev.pageX;
+						var pageY = ev.originalEvent.touches ? ev.originalEvent.touches[0].pageY : ev.pageY;
+						//var pageX = typeof ev.pageX == 'undefined' ? ev.originalEvent.touches[0].pageX : ev.pageX;
+						//var pageY = typeof ev.pageY == 'undefined' ? ev.originalEvent.touches[0].pageY : ev.pageY;
 						var deltaX = parseInt(pageX) - parseInt(xStart);
 						var deltaY = parseInt(pageY) - parseInt(yStart);
 						var percent = ((100 / pane_width) * deltaX) / pane_count;
@@ -122,11 +127,14 @@
 						}
 					}
 					break;
-				case 'mouseup':
-				case 'touchend':
+				case 'mouseup': console.log('debug: mouseup')
+				case 'touchend': console.log('debug: touchend')
 					touchStart = false;
-					var pageX = (typeof ev.pageX == 'undefined') ? ev.originalEvent.changedTouches[0].pageX : ev.pageX;
-					var pageY = (typeof ev.pageY == 'undefined') ? ev.originalEvent.changedTouches[0].pageY : ev.pageY;
+					//var pageX = (typeof ev.pageX == 'undefined') ? ev.originalEvent.changedTouches[0].pageX : ev.pageX;
+					//var pageY = (typeof ev.pageY == 'undefined') ? ev.originalEvent.changedTouches[0].pageY : ev.pageY;
+					var pageX = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0].pageX : ev.pageX;
+					var pageY = ev.originalEvent.changedTouches ? ev.originalEvent.changedTouches[0].pageY : ev.pageY;
+					
 					var deltaX = parseInt(pageX) - parseInt(xStart);
 					var deltaY = parseInt(pageY) - parseInt(yStart);
 					
