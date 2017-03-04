@@ -1,7 +1,7 @@
 //var root = 'http://localhost:3000'
 var root = 'http://52.79.194.142';
 
-angular.module('starter.controllers', [])	
+angular.module('starter.controllers', [])
 
 
 	.factory('UserAuth', function ($window) {
@@ -117,7 +117,7 @@ angular.module('starter.controllers', [])
 			if($scope.sex.value == 2) { $scope.requestURL = root+'/api/photo' }
 			else if($scope.sex.value == 1) { $scope.requestURL = root+'/api/photo/gender/1' }
 			else { $scope.requestURL = root+'/api/photo/gender/0' }
-			return 
+			return
 		}
 		$scope.setURL()
 
@@ -135,6 +135,12 @@ angular.module('starter.controllers', [])
 					$http.put(root+'/api/photo/'+$scope.photos[$scope.count].image_path+'/like/0')
 						.success(function(res){ })
 						.error(function(err){ console.log(err); });
+
+					if(UserAuth.isSessionActive()){
+						$http.put(root+'/api/user/'+UserAuth.getCurrentUser()+'/dislike/'+$scope.photos[$scope.count].image_path)
+							.success(function(res){ })
+							.error(function(err){ console.log(err); });
+					}
 
 					if($scope.count == 0)
 					{
@@ -183,11 +189,11 @@ angular.module('starter.controllers', [])
 
 				$.each($scope.photos, function (index, value) {
 
-					html_slide += '<li class="pane3 id="' + value.username + '"><div class="img" pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
+					html_slide += '<li class="pane3" id="' + value.username + '"><div class="img"  pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
 
 					html_slide += "<div style='height:22px;'></div>";
 
-					html_slide += '<div  style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.explanation ? value.explanation : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
+					html_slide += '<div style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.explanation ? value.explanation : "나의 데일리룩") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
 				});
 
 				$("#lis").html(html_slide);
@@ -202,19 +208,19 @@ angular.module('starter.controllers', [])
 		/*from here, functions for uploading camera & gallery Images*/
 
 		var upload = function(serverURL, fileURL){
-		
+
 			var uploadOptions = new FileUploadOptions();
 			uploadOptions.fileKey = "user_photo";
 			uploadOptions.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
 			uploadOptions.mimeType = "image/jpeg";
 			uploadOptions.chunkedMode = false;
 			uploadOptions.params = { fileURL : JSON.stringify(fileURL)};
-		
+
 			console.log(JSON.stringify(fileURL))
 
 			$cordovaFileTransfer.upload(encodeURI(serverURL), fileURL, uploadOptions).then(
 				function(result){
-					console.log("Hi you ar in result")	
+					console.log("Hi you ar in result")
 					console.log("SUCCESS: " + JSON.stringify(result.response));
 
 				},function(error){
@@ -242,7 +248,7 @@ angular.module('starter.controllers', [])
 			navigator.camera.getPicture(function(imageURI) {
 
 				upload(root+"/api/photo/"+UserAuth.getCurrentUser(), imageURI);
-				
+
 				console.log(root+"/api/photo/"+UserAuth.getCurrentUser())
 
 			},function(err){
@@ -269,7 +275,7 @@ angular.module('starter.controllers', [])
 
 			navigator.camera.getPicture(function(imageURI) {
 
-				console.log('Hi You ar in Getpicture function')	
+				console.log('Hi You ar in Getpicture function')
 
 				upload(root+"/api/photo/"+UserAuth.getCurrentUser(), imageURI);
 
@@ -284,8 +290,8 @@ angular.module('starter.controllers', [])
 
 		/*from here, code for option modal*/
 
-		$ionicModal.fromTemplateUrl('templates/options.html',{	
-			scope : $scope			
+		$ionicModal.fromTemplateUrl('templates/options.html',{
+			scope : $scope
 		}).then(function(modal){
 			$scope.modal = modal;
 
@@ -331,7 +337,7 @@ angular.module('starter.controllers', [])
 	})
 
 	.controller('GalleryCtrl', function($scope, $http, $ionicModal, $ionicPopup, $state, $rootScope, $ionicHistory, UserAuth){
-		$scope.root = root;	
+		$scope.root = root;
 		$scope.images = [];
 		$scope.pages=0;
 		$scope.total=0;
@@ -364,7 +370,7 @@ angular.module('starter.controllers', [])
 			$scope.showModal('templates/imageModal.html');
 		}
 
-		
+
 
 		$scope.showModal = function(templateUrl) {
 			$ionicModal.fromTemplateUrl(templateUrl, {
@@ -401,8 +407,8 @@ angular.module('starter.controllers', [])
 
 
 		$scope.getMoreImages = function(){
-	
-			$scope.loadingUnit = $scope.pages ? 8 : 20 ; 
+
+			$scope.loadingUnit = $scope.pages ? 8 : 20 ;
 
 			for(i = 0 ; i < $scope.loadingUnit ; i++){
 				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
@@ -418,7 +424,7 @@ angular.module('starter.controllers', [])
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 		}
 
-		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
 			if(toState.name == "app.gallery"){
 				$scope.initialize()
 			}
@@ -486,6 +492,7 @@ angular.module('starter.controllers', [])
 							//UserAuth.setToken(res2.data)
 							$scope.loginNew.username = ''
 							$scope.loginNew.password = ''
+							$scope.loginNew.password_c = ''
 							$scope.loginNew.gender = ''
 							$scope.loginNew.instaID = ''
 							$scope.login_new = false
@@ -601,15 +608,15 @@ angular.module('starter.controllers', [])
 		}
 
 		$scope.getMoreImages = function(){
-	
-			$scope.loadingUnit = $scope.pages ? 8 : 20 ; 
+
+			$scope.loadingUnit = $scope.pages ? 8 : 20 ;
 
 
 			for( i =0 ; i < $scope.loadingUnit ; i++){
 				if($scope.total > $scope.loadingUnit * $scope.pages + i) {
 
 					$scope.images.push($scope.likedImages[$scope.loadingUnit * $scope.pages + i])
-				}; 
+				};
 				console.log("loaded images # is "+ $scope.images.length)
 			}
 
@@ -665,9 +672,9 @@ angular.module('starter.controllers', [])
 		};
 
 
-		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){ 
-			//event.preventDefault(); 
-			// transitionTo() promise will be rejected with 
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
+			//event.preventDefault();
+			// transitionTo() promise will be rejected with
 			// a 'transition prevented' error
 			if(toState.name == "app.snapbox"){
 				$scope.initialize()
@@ -697,10 +704,3 @@ angular.module('starter.controllers', [])
 		$scope.initialize()
 
 	});
-
-
-
-
-
-
-
