@@ -84,14 +84,14 @@
 
 			switch (ev.type) {
 				case 'touchstart':
-					console.log('debug: touchstart')
+					//console.log('debug: touchstart')
 					if(touchStart === false) {
 						touchStart = true;
 						xStart = ev.originalEvent.touches[0].pageX;
 						yStart = ev.originalEvent.touches[0].pageY;
 					}
 				case 'mousedown':
-					console.log('debug: mousedown')
+					//console.log('debug: mousedown')
 					if(touchStart === false) {
 						touchStart = true;
 						xStart = ev.pageX;

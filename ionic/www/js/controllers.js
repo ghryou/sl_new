@@ -112,6 +112,8 @@ angular.module('starter.controllers', [])
 		$scope.sex = { value : UserAuth.getOptions().gender }
 		$scope.root = root;
 		$scope.requestURL = root+'/api/photo'
+		$scope.getCurrentUser= UserAuth.getCurrentUser;
+		$scope.isSessionActive = UserAuth.isSessionActive;
 
 		$scope.setURL = function (){
 			if($scope.sex.value == 2) { $scope.requestURL = root+'/api/photo' }
@@ -149,7 +151,7 @@ angular.module('starter.controllers', [])
 				},
 				onLike: function (item) {
 					$scope.count--;
-
+					
 					$http.put(root+'/api/photo/'+$scope.photos[$scope.count].image_path+'/like/1')
 						.success(function(res){ })
 						.error(function(err){ console.log(err); });
@@ -184,9 +186,9 @@ angular.module('starter.controllers', [])
 			$http.get($scope.requestURL).then(function (res){
 
 				$scope.photos = res.data;
-
-				var html_slide = ""
-
+				
+				var html_slide = "";
+				
 				$.each($scope.photos, function (index, value) {
 
 					html_slide += '<li class="pane3" id="' + value.username + '"><div class="img"  pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
