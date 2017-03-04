@@ -9,3 +9,6 @@ plugins/
 
 *.pem
 *.out
+
+*.properties*
+custom_rules.xml
