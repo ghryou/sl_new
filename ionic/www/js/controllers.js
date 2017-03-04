@@ -125,7 +125,7 @@ angular.module('starter.controllers', [])
 
 
 		function goTinder() {
-			var countMax = 5;
+			var countMax = 2;
 			$scope.count = countMax;
 
 			$("#tinderslide").jTinder({
