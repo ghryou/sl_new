@@ -32,11 +32,11 @@
 		<div id="temp" style="position:fixed;margin:0;padding:0;right:0;bottom:0;margin-right:16px;margin-bottom:16px;z-index:999;">
 			<input type="hidden" id="uri" />
 			<div style="position:absolute;bottom:64px;right:8px;">
-				<button  id="btnAlbum" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-click="uploadPhoto()">
+				<button  id="btnAlbum" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" ng-if="isSessionActive()" ng-click="uploadPhoto()">
 					<i class="material-icons">&#xE413;</i>
 				</button>
 			</div>
-			<button  id="btnPhoto" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-click="takePicture()">
+			<button  id="btnPhoto" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" ng-if="isSessionActive()"  ng-click="takePicture()">
 				<i class="material-icons">&#xE439;</i>
 			</button>
 			<img id="myImage" style="width:200px;height:auto;display:none">
