@@ -193,8 +193,8 @@ angular.module('starter.controllers', [])
 
 					html_slide += '<li class="pane3" id="' + value.username + '"><div class="img"  pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
 
-					if (true) {
-					html_slide += "<div style='height:18px;font-size:10px;margin-top:8px;padding:0px 8px 8px;text-align:center;'><img src='img/icon_instagram2.png' style='width:auto;height:20px;'> @" + value.instaID + "</div>";
+					if (value.instaID) {
+					html_slide += "<div style='height:18px;font-size:10px;margin-top:8px;padding:0px 8px 8px;text-align:center;'><img src='../img/icon_instagram.png' style='width:auto;height:20px;'> <a href='https://instragram.com/"+value.instaID+"' style='text-decoration:none; color:black;'>@" + value.instaID + "</a></div>";
 				}
 				else {
 					html_slide += "<div style='height:22px;'></div>";
