@@ -7,8 +7,9 @@
   <author email="snaplook.me@gmail.com" href="http://snaplook.me/">
       SnapLook inc.
     </author>
-  <content src="index.html"/>
+  <content src="http://172.20.10.2:8100" original-src="index.html"/>
   <access origin="*"/>
+  <preference name="loadUrlTimeoutValue" value="700000"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

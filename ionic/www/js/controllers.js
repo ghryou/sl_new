@@ -448,7 +448,7 @@ angular.module('starter.controllers', [])
 				});
 			}else{
 				$scope.user =  $scope.getCurrentUser();
-				$scope.resetImg();
+				//$scope.resetImg();
 			}
 		}
 
@@ -699,7 +699,7 @@ angular.module('starter.controllers', [])
 				});
 			}else{
 				$scope.user =  $scope.getCurrentUser();
-				$scope.resetImg();
+				//$scope.resetImg();
 			}
 		}
 
