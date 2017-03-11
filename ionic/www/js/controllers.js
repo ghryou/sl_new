@@ -123,11 +123,11 @@ angular.module('starter.controllers', [])
 		}
 		$scope.setURL()
 
-		getPhotos()
-
+		//getPhotos()
+		var countMax = 2;
 
 		function goTinder() {
-			var countMax = 2;
+			console.log("test");
 			$scope.count = countMax;
 
 			$("#tinderslide").jTinder({
@@ -151,7 +151,7 @@ angular.module('starter.controllers', [])
 				},
 				onLike: function (item) {
 					$scope.count--;
-					
+
 					$http.put(root+'/api/photo/'+$scope.photos[$scope.count].image_path+'/like/1')
 						.success(function(res){ })
 						.error(function(err){ console.log(err); });
@@ -173,8 +173,8 @@ angular.module('starter.controllers', [])
 				likeSelector: '.like',
 				dislikeSelector: '.dislike'
 
-
-			})}
+			})
+		}
 
 		function getPhotos() {
 
@@ -182,25 +182,21 @@ angular.module('starter.controllers', [])
 			$("#tinderdiv").append('<div id="tinderslide" style="margin-top:-2% !important;margin-left:-10% !important; width:120%; height:605px;"><ul id="lis"><div class="mdl-spinner mdl-js-spinner is-active"></div><br><br><button class="mdl-button mdl-js-button mdl-js-ripple-effect"> Loading... </button></ul></div>');
 			componentHandler.upgradeDom(); // CSS 적용
 
-
 			$http.get($scope.requestURL).then(function (res){
 
 				$scope.photos = res.data;
-				
+
 				var html_slide = "";
-				
+
 				$.each($scope.photos, function (index, value) {
 
 					html_slide += '<li class="pane3" id="' + value.username + '"><div class="img"  pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
 
 					if (value.instaID) {
-					html_slide += "<div style='height:18px;font-size:10px;margin-top:8px;padding:0px 8px 8px;text-align:center;'><img src='../img/icon_instagram.png' style='width:auto;height:20px;'> <a href='https://instragram.com/"+value.instaID+"' style='text-decoration:none; color:black;'>@" + value.instaID + "</a></div>";
-				}
-				else {
-					html_slide += "<div style='height:22px;'></div>";
-				} 
-
-
+						html_slide += "<div style='height:18px;font-size:10px;margin-top:8px;padding:0px 8px 8px;text-align:center;'><img src='../img/icon_instagram.png' style='width:auto;height:20px;'> <a href='https://instragram.com/"+value.instaID+"' style='text-decoration:none; color:black;'>@" + value.instaID + "</a></div>";
+					} else {
+						html_slide += "<div style='height:22px;'></div>";
+					}
 					html_slide += '<div style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.instaID ? "" : "") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
 				});
 
@@ -209,8 +205,6 @@ angular.module('starter.controllers', [])
 
 				goTinder();
 			})
-
-
 		}
 
 		/*from here, functions for uploading camera & gallery Images*/
@@ -237,8 +231,6 @@ angular.module('starter.controllers', [])
 				})
 
 		};
-
-
 
 		var takePicture = function(serverURL){
 			var options = {
@@ -279,8 +271,6 @@ angular.module('starter.controllers', [])
 				saveToPhotoAlbum : false
 			};
 
-
-
 			navigator.camera.getPicture(function(imageURI) {
 
 				console.log('Hi You ar in Getpicture function')
@@ -295,7 +285,6 @@ angular.module('starter.controllers', [])
 
 		$scope.uploadPhoto = uploadPhoto;
 
-
 		/*from here, code for option modal*/
 
 		$ionicModal.fromTemplateUrl('templates/options.html',{
@@ -309,7 +298,6 @@ angular.module('starter.controllers', [])
 			$scope.modal.show();
 		};
 
-
 		$scope.hideOptions = function(){
 			$scope.setURL();
 			getPhotos();
@@ -322,7 +310,10 @@ angular.module('starter.controllers', [])
 		$scope.$on('$destroy', function(){ // when current view destroys , delete modal too
 			$scope.modal.remove();
 		})
-
+		
+		$scope.$on('$ionicView.loaded', function(){
+    		getPhotos();
+  		});
 
 	})
 
