@@ -310,10 +310,8 @@ angular.module('starter.controllers', [])
 		$scope.$on('$destroy', function(){ // when current view destroys , delete modal too
 			$scope.modal.remove();
 		})
-		
-		$scope.$on('$ionicView.loaded', function(){
-    		getPhotos();
-  		});
+
+		getPhotos();
 
 	})
 
