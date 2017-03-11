@@ -220,3 +220,13 @@ max-width:300px;
 .view-background {
 	background-color: #444444;
 }
+
+.popup-title{
+
+	font-size: 16px
+}
+
+.popup-buttons .button {
+   	background-color: #444444 !important;
+	color: rgb(236, 228, 179) !important;
+}

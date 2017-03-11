@@ -3,7 +3,6 @@ var root = 'http://52.79.194.142';
 
 angular.module('starter.controllers', [])
 
-
 	.factory('UserAuth', function ($window) {
 		var UserAuth = this
 
@@ -107,13 +106,22 @@ angular.module('starter.controllers', [])
 
 	})
 
-	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFileTransfer, UserAuth, $cordovaCamera) {
+	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFileTransfer, UserAuth, $cordovaCamera, $timeout, $ionicPopup) {
 
 		$scope.sex = { value : UserAuth.getOptions().gender }
 		$scope.root = root;
 		$scope.requestURL = root+'/api/photo'
 		$scope.getCurrentUser= UserAuth.getCurrentUser;
 		$scope.isSessionActive = UserAuth.isSessionActive;
+		
+		$scope.exitApp = function(){
+		
+		$ionicPopup.alert({
+			title: "종료하시겠습니까?"
+		})
+		ionic.Platform.exitApp();	
+
+		}
 
 		$scope.setURL = function (){
 			if($scope.sex.value == 2) { $scope.requestURL = root+'/api/photo' }
@@ -122,10 +130,10 @@ angular.module('starter.controllers', [])
 			return
 		}
 		$scope.setURL()
+		
 
-		//getPhotos()
 		var countMax = 2;
-
+		var isFirstLoading = 1;
 		function goTinder() {
 			console.log("test");
 			$scope.count = countMax;
@@ -175,19 +183,13 @@ angular.module('starter.controllers', [])
 
 			})
 		}
-
-		function getPhotos() {
-
-			$("#tinderslide").remove();
-			$("#tinderdiv").append('<div id="tinderslide" style="margin-top:-2% !important;margin-left:-10% !important; width:120%; height:605px;"><ul id="lis"><div class="mdl-spinner mdl-js-spinner is-active"></div><br><br><button class="mdl-button mdl-js-button mdl-js-ripple-effect"> Loading... </button></ul></div>');
-			componentHandler.upgradeDom(); // CSS 적용
-
+		function getTwoPhotos(){
 			$http.get($scope.requestURL).then(function (res){
 
 				$scope.photos = res.data;
 
 				var html_slide = "";
-
+				
 				$.each($scope.photos, function (index, value) {
 
 					html_slide += '<li class="pane3" id="' + value.username + '"><div class="img"  pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
@@ -205,8 +207,33 @@ angular.module('starter.controllers', [])
 
 				goTinder();
 			})
+		
 		}
 
+
+		function getPhotos() {
+			console.log('call getphotos()')
+			if(!isFirstLoading){
+
+				$("#tinderslide").remove();
+				$("#tinderdiv").append('<div id="tinderslide" style="margin-top:-2% !important;margin-left:-10% !important; width:120%; height:605px;"><ul id="lis"></ul></div>')
+			getTwoPhotos();
+			}
+			else
+			{
+				/*$timeout(function(){
+				
+					getTwoPhotos();
+				
+				},0,true)
+				*/
+				getTwoPhotos();
+				isFirstLoading=0;
+			}
+				
+			componentHandler.upgradeDom(); 
+		}
+		
 		/*from here, functions for uploading camera & gallery Images*/
 
 		var upload = function(serverURL, fileURL){
@@ -224,7 +251,9 @@ angular.module('starter.controllers', [])
 				function(result){
 					console.log("Hi you ar in result")
 					console.log("SUCCESS: " + JSON.stringify(result.response));
-
+					$ionicPopup.alert({
+						title: 'Upload Success'
+					})
 				},function(error){
 					console.log(error);
 
@@ -281,6 +310,8 @@ angular.module('starter.controllers', [])
 			},function(err){
 
 			}, options);
+
+
 		};
 
 		$scope.uploadPhoto = uploadPhoto;
@@ -311,10 +342,16 @@ angular.module('starter.controllers', [])
 			$scope.modal.remove();
 		})
 		
-		$scope.$on('$ionicView.loaded', function(){
-    		getPhotos();
-  		});
-
+		$scope.$on('$ionicView.loaded', function(event){
+			
+			console.log('view loaded complete at first time')
+			$timeout(function(){
+			
+			getPhotos();
+		
+			}, 0, true)
+		})
+		
 	})
 
 

@@ -100,7 +100,6 @@
 				case 'mousemove': console.log('debug: mousemove')
 				case 'touchmove': console.log('debug: touchmove')
 					if(touchStart === true) {
-												
 						var pageX = ev.originalEvent.touches ? ev.originalEvent.touches[0].pageX : ev.pageX;
 						var pageY = ev.originalEvent.touches ? ev.originalEvent.touches[0].pageY : ev.pageY;
 						//var pageX = typeof ev.pageX == 'undefined' ? ev.originalEvent.touches[0].pageX : ev.pageX;
