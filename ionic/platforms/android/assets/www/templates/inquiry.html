@@ -1,0 +1,20 @@
+<ion-view view-title="To Snaplook">
+    <ion-content>
+
+       
+<div class="vertical-center">
+<div class="container full-size-width">
+  <h3>스냅룩 팀에게</h3>
+  <p>궁금하거나 고쳐야 할 점을 보내주세요! <br/>
+  피드백은 스냅룩 팀에게 큰 힘이 됩니다.</p>
+  <form ng-submit="sendInquiry()">
+    <div class="form-group">
+      <textarea class="form-control" style="width:100%" rows="8" ng-model="$parent.comment" placeholder="하실 말씀..."></textarea>
+    </div>
+    <button class="button button-block button-positive" type="submit">제출하기</button>
+  </form>
+</div>
+</div>
+  <div ng-show="comment_sended" class="col-xs-12 col-md-12 alert" style = "text-align: center;" role="alert">제출되었습니다!</div>
+    </ion-content>
+</ion-view>

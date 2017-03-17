@@ -1,5 +1,7 @@
-//var root = 'http://localhost:3000'
-var root = 'http://52.79.194.142';
+const root = 'http://localhost:9000'
+//const root = 'http://52.79.194.142'
+const ver_android = '0.0.0'
+const ver_ios = '0.0.0'
 
 angular.module('starter.controllers', [])
 
@@ -45,7 +47,7 @@ angular.module('starter.controllers', [])
 			if (options == null){
 				options = { gender: 2 }
 			}
-			console.log(options.gender)
+			//console.log(options.gender)
 			return options
 		}
 		return UserAuth
@@ -76,7 +78,7 @@ angular.module('starter.controllers', [])
 
 
 
-	.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, UserSvc, UserAuth) {
+	.controller('AppCtrl', function($scope, $ionicModal, $ionicPopup, $timeout, $http, UserSvc, UserAuth) {
 
 		// With the new view caching in Ionic, Controllers are only called
 		// when they are recreated or on app start, instead of every page change.
@@ -105,6 +107,48 @@ angular.module('starter.controllers', [])
 			$scope.modal.show();
 		};
 
+		// Update Check
+		/*
+		var deviceInformation = ionic.Platform.device();
+
+		var isWebView = ionic.Platform.isWebView();
+		var isIPad = ionic.Platform.isIPad();
+		var isIOS = ionic.Platform.isIOS();
+		var isAndroid = ionic.Platform.isAndroid();
+		var isWindowsPhone = ionic.Platform.isWindowsPhone();
+		var currentPlatformVersion = ionic.Platform.version();
+		*/
+		var currentPlatform = ionic.Platform.platform();
+		var device = -1;
+		var ver_check = '';
+		if(currentPlatform == "android"){
+			device = 0;
+			ver_check = ver_android;
+		}else if(currentPlatform == "ios"){
+			device = 1;
+			ver_check = ver_ios;
+		}else{
+			device = -1;
+			ver_check = ver_server;
+		}
+
+		$http.get(root+'/api/version/'+device).then(function (res){
+			var ver = res.data;
+			if (ver_check == ver){
+				console.log("newest version")
+			}else{
+				$ionicPopup.show({
+					template: '<div>',
+					title: '새로운 버전이 출시되었습니다',
+					subTitle: 'Please download new version',
+					scope: $scope,
+					buttons: [
+						{text: '<b>확인</b>', type: 'button-positive'}
+					]
+				});
+			}
+		})
+
 	})
 
 	.controller('HomeCtrl', function($scope, $ionicModal, $http, $cordovaFileTransfer, UserAuth, $cordovaCamera) {
@@ -127,7 +171,6 @@ angular.module('starter.controllers', [])
 		var countMax = 2;
 
 		function goTinder() {
-			console.log("test");
 			$scope.count = countMax;
 
 			$("#tinderslide").jTinder({

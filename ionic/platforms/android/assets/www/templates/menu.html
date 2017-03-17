@@ -1,0 +1,44 @@
+
+<ion-side-menus enable-menu-with-back-views="false">
+	<ion-side-menu-content drag-content="false">
+		<ion-nav-bar class="bar-dark" align-title="center">
+			<ion-nav-buttons side="left">
+				<button class="button button-clear" menu-toggle="left">
+					<span class="icon ion-navicon"></span>
+				</button>
+			</ion-nav-buttons>
+		</ion-nav-bar>
+		<ion-nav-view name="menuContent"></ion-nav-view>
+	</ion-side-menu-content>
+
+	<ion-side-menu>
+		<ion-header-bar class="bar-dark" align-title="center">
+				<img class="title-image" src="img/logo-h.png">
+		</ion-header-bar>
+		<ion-content scroll="false" style="background-color:#444444">
+			<div class="list" style="background-color:#444444">
+				<ion-list>
+					<ion-item class="item-icon-left snaplook-item" menu-close ui-sref="app.home">
+						<span class="icon ion-home " style="font-size: 28px"></span>Home
+					</ion-item>
+					<ion-item class="item-icon-left snaplook-item " menu-close ui-sref="app.bestlook">
+						<span class="icon ion-heart" style="font-size: 28px"></span>Today's BestLook
+					</ion-item>
+					<ion-item class="item-icon-left snaplook-item " menu-close ui-sref="app.profile">
+						<span class="icon ion-ios-person" style="font-size: 28px"></span> My Profile
+					</ion-item>
+					<ion-item class="item-icon-left snaplook-item " menu-close ui-sref="app.gallery"> 
+						<span class="icon ion-images" style="font-size: 28px"></span> My Photo Gallery
+					</ion-item>
+					
+					<ion-item class="item-icon-left snaplook-item " menu-close ui-sref="app.snapbox">
+						<span class="icon ion-star" style="font-size: 28px"></span> SNAP BOX
+					</ion-item>
+				</ion-list>
+			</div>
+					<ion-item class="snaplook-item" style="font-size:16px; font-weight:bold;" menu-close ui-sref="app.inquiry">To SnapLook
+					</ion-item>
+		</ion-content>
+	</ion-side-menu>
+
+</ion-side-menus>

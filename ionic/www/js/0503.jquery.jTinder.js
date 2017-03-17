@@ -97,8 +97,8 @@
 						xStart = ev.pageX;
 						yStart = ev.pageY;
 					}
-				case 'mousemove': console.log('debug: mousemove')
-				case 'touchmove': console.log('debug: touchmove')
+				case 'mousemove': //console.log('debug: mousemove')
+				case 'touchmove': //console.log('debug: touchmove')
 					if(touchStart === true) {
 												
 						var pageX = ev.originalEvent.touches ? ev.originalEvent.touches[0].pageX : ev.pageX;
@@ -127,8 +127,8 @@
 						}
 					}
 					break;
-				case 'mouseup': console.log('debug: mouseup')
-				case 'touchend': console.log('debug: touchend')
+				case 'mouseup': //console.log('debug: mouseup')
+				case 'touchend': //console.log('debug: touchend')
 					touchStart = false;
 					//var pageX = (typeof ev.pageX == 'undefined') ? ev.originalEvent.changedTouches[0].pageX : ev.pageX;
 					//var pageY = (typeof ev.pageY == 'undefined') ? ev.originalEvent.changedTouches[0].pageY : ev.pageY;
