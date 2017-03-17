@@ -103,6 +103,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 						controller: 'InquiryCtrl'
 					}
 				}
+			})
+			.state('intro', {
+				url: '/intro',
+				templateUrl:'templates/intro.html'
+				//controller: 'IntroCtrl'
 			});
 
 		// if none of the above states are matched, use this as the fallback
@@ -110,5 +115,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionicImgCache','ngCo
 		$urlRouterProvider.otherwise('/app/home');
 
 	});
+
 
 

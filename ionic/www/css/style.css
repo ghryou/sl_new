@@ -220,3 +220,26 @@ max-width:300px;
 .view-background {
 	background-color: #444444;
 }
+
+.popup-title{
+
+	font-size: 16px
+}
+
+.popup-buttons .button {
+   	background-color: #444444 !important;
+	color: rgb(236, 228, 179) !important;
+}
+
+#intro-view .slider-slide{
+	padding-top: 100px;
+	text-align: center;
+
+}
+#intro-view .slider{
+	height: 100%;
+}
+#intro-view .icon-slide{
+	font-size: 20em;
+	display: inline-block;
+}
