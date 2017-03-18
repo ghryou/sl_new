@@ -37,7 +37,7 @@
     <author email="snaplook.me@gmail.com" href="http://snaplook.me/">
       SnapLook inc.
     </author>
-    <content original-src="index.html" src="http://172.30.1.53:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="cdvfile://*" />
     <allow-navigation href="http://192.168.43.30:8100" />

@@ -265,13 +265,12 @@ angular.module('starter.controllers', [])
 			}
 			else
 			{
-				/*$timeout(function(){
+				$timeout(function(){
 				
 					getTwoPhotos();
 				
-				},0,true)
-				*/
-				getTwoPhotos();
+				},700,true)
+				
 				isFirstLoading=0;
 			}
 				
@@ -393,7 +392,7 @@ angular.module('starter.controllers', [])
 			
 			getPhotos();
 		
-			}, 0, true)
+			}, 300, true)
 		})
 	})
 
