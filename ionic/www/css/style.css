@@ -197,7 +197,7 @@ max-width:300px;
   border-color: #444444;
   background-color: #444444;
   color: rgb(236, 228, 179);
-  font-size: 14px;
+  font-size: 15px;
 
 }
 
@@ -242,4 +242,10 @@ max-width:300px;
 #intro-view .icon-slide{
 	font-size: 20em;
 	display: inline-block;
+}
+.profile-info {
+ color: #FFFFFF !important;
+}
+.button:hover{
+ color: inherit !important;
 }

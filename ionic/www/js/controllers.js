@@ -1,5 +1,5 @@
-const root = 'http://localhost:9000'
-//const root = 'http://52.79.194.142'
+//const root = 'http://localhost:9000'
+const root = 'http://52.79.194.142'
 const ver_android = '0.0.0'
 const ver_ios = '0.0.0'
 
@@ -235,15 +235,15 @@ angular.module('starter.controllers', [])
 				var html_slide = "";
 				
 				$.each($scope.photos, function (index, value) {
-
+					console.log(value.username, value.insta)
 					html_slide += '<li class="pane3" id="' + value.username + '"><div class="img"  pid="' + value.username + '" style="background: url(\''+ root + '/res/photos/'+value.image_path +'\') no-repeat scroll center center;background-size: cover;"></div>';
 
-					if (value.instaID) {
-						html_slide += "<div style='height:18px;font-size:10px;margin-top:8px;padding:0px 8px 8px;text-align:center;'><img src='../img/icon_instagram.png' style='width:auto;height:20px;'> <a href='https://instragram.com/"+value.instaID+"' style='text-decoration:none; color:black;'>@" + value.instaID + "</a></div>";
+					if (value.insta) {
+						html_slide += "<div style='height:18px;font-size:15px;margin-top:8px;padding:0px 8px 8px;text-align:center;'><img src='../img/icon_instagram.png' style='width:auto;height:28px;'> <a href='https://instragram.com/"+value.insta+"' style='text-decoration:none; color:black;'>@" + value.insta + "</a></div>";
 					} else {
-						html_slide += "<div style='height:22px;'></div>";
+						html_slide += "<div style='height:22px; font-size: 14px'> No Instagram  </div>";
 					}
-					html_slide += '<div style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.instaID ? "" : "") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
+					html_slide += '<div style="padding-top:0px;"><!--i onclick="goScrap(' + value.username + ');	 $(this).addClass(\'md-red\');" class="material-icons md-light md-inactive star-btn">&#xE838;</i--><p style="font-size:12px;">' + (value.insta ? "" : "") + '</p></div><div class="like"></div><div class="dislike"></div></li>';
 				});
 
 				$("#lis").html(html_slide);
@@ -628,7 +628,7 @@ angular.module('starter.controllers', [])
 							if(res.data.insta != null){
 								$scope.profile_insta = res.data.insta
 							}else{
-								$scope.profile_insta = "We Need Your Instagram Bro"
+								$scope.profile_insta = "We Need Your Instagram"
 							}
 						} else {$scope.profile_logout();}
 					})
